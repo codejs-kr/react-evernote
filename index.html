@@ -3,44 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <title>Hello React!</title>
+    <style>
+      select { margin: 5px; min-width: 100px; }
+    </style>
     <script src="https://fb.me/react-15.1.0.js"></script>
     <script src="https://fb.me/react-dom-15.1.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
   </head>
   <body>
+    <h1>Profile</h1>
     <div id="example"></div>
-    <div id="timer"></div>
 
     <script type="text/babel">
-    /*
-      ReactDOM.render(
-        <h1>Hello, world!</h1>,
-        document.getElementById('example')
-      );
 
-      var Timer = React.createClass({
-        getInitialState: function() {
-          return {secondsElapsed: 0};
-        },
-        tick: function() {
-          this.setState({secondsElapsed: this.state.secondsElapsed + 1});
-        },
-        componentDidMount: function() {
-          this.interval = setInterval(this.tick, 1000);
-        },
-        componentWillUnmount: function() {
-          clearInterval(this.interval);
-        },
-        render: function() {
-          return (
-            <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
-          );
-        }
+    // select options wishlist 음식, 여행, 물건
+    var WishTypeList = React.createClass({
+      getInitialState: function() {
+        return {
+          title: "좋아하는 리스트",
+          selectedItem: "음식"
+        };
+      },
+      handleChange: function(event) {
+        console.log(event.target.value);
+
+        this.setState({
+          selectedItem: event.target.value
+        });
+
+        event.preventDefault();
+        // setState     항목이 없는 경우 추가 / 있는 경우 변경
+        // replaceState 항목이 없는 경우 대체 / 있는 경우도 대체
+      },
+      render: function() {
+        console.log('state', this.state);
+
+        var items = ['음식', '여행', '물건'];
+        var options = items.map(function(name, i) {
+          return <option value={name} key={i}>{name}</option>;
+        });
+
+        return (
+          <div>
+            <select onChange={this.handleChange}>
+              {options}
+            </select>
+            <WishDetailList selectedItem={this.state.selectedItem} />
+          </div>
+        );
       }
-    );
+    });
 
-    ReactDOM.render(<Timer />, document.getElementById('timer'));
-*/
+    var WishDetailList = React.createClass({
+      getInitialState: function() {
+        return {
+          "음식": ["치킨", "피자", "카레", "맥주", "갈비", "삼겹살", "김치찌개", "탕수육"],
+          "여행": ["일본", "프랑스", "몽골", "러시아", "미국", "호주", "북한"],
+          "물건": ["RC카", "옷", "신발", "시계", "노트북", "PS4", "책상", "의자"]
+        };
+      },
+      render: function() {
+        console.log('WishDetailList', this.props.selectedItem);
+
+        var wishArray = this.state;
+        var items = wishArray[this.props.selectedItem];
+        var options = items.map(function(name, i) {
+          return <option value={name} key={i}>{name}</option>;
+        });
+
+        return (
+          <select>
+            {options}
+          </select>
+        );
+      }
+    });
+
 
     var Profile = React.createClass({
       getDefaultProps: function() {
@@ -74,13 +112,13 @@
         };
 
         return (
-          <div className="button save" onClick={this.handleClick}>
-            Profile <br/>
-            {props.one} / {this.props.obj.name} <br/>
-            Age: {this.props.age} <br />
-            Team: {this.props.team} <br />
-            Count: {this.state.count}
-          </div>
+          <ul className="list">
+            <li onClick={this.handleClick}>Name: {props.one} / {this.props.obj.name}</li>
+            <li>Age: {this.props.age}</li>
+            <li>Team: {this.props.team}</li>
+            <li>Count: {this.state.count}</li>
+            <li>WishItem: <WishTypeList /></li>
+          </ul>
         );
       }
     });
@@ -89,6 +127,22 @@
       <Profile id="123" obj={{name: 'PJS'}} age={32} />,
       document.querySelector('#example')
     );
+
+    /*
+    var WishListItems = React.createClass({
+      getInitialState: function() {
+        return {
+          selectedItem: "음식"
+        };
+      },
+      render: function() {
+        var wishListItem = ['음식', '여행', '물건'];
+
+        return (
+          <option></option>
+        );
+      });
+    });*/
     </script>
   </body>
 </html>
