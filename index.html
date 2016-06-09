@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <title>Hello React!</title>
     <style>
+      html, body { margin: 0; height: 0; }
+      #wrap { width: 100%; height: 500px; background: #fff; border-bottom: solid 2px #000; }
+      aside { width: 200px; height: 500px; border-right: solid 1px #000; }
+      aside ul { list-style: none; margin: 0; padding: 0; }
+      aside a {
+        display: block; padding: 10px 20px; background: rgba(200, 200, 200, 0.3);
+        border-bottom: solid 1px #000; text-decoration: none;
+      }
+      aside a:hover { background: rgba(200, 200, 200, 1); }
       select { margin: 5px; min-width: 100px; }
     </style>
     <script src="https://fb.me/react-15.1.0.js"></script>
@@ -11,10 +20,83 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
   </head>
   <body>
+
+    <div id="wrap">
+      <aside id="nav">
+        <ul>
+          <li><a href="#">메뉴1</a></li>
+          <li><a href="#">메뉴2</a></li>
+          <li><a href="#">메뉴3</a></li>
+        </ul>
+      </aside>
+      <section id="content">
+        <div></div>
+      </section>
+    </div>
+
+
     <h1>Profile</h1>
     <div id="example"></div>
+    <div>
+      <h2>Structure</h2>
+      <pre>
+        WishTypeList
+        - options
+
+        WishDetailList
+        - options
+      </pre>
+    </div>
+
 
     <script type="text/babel">
+    var AsideMenu = React.createClass({
+      getInitialState: function() {
+        return ["Menu1", "Menu2", "Menu3"];
+      },
+      handleChange: function() {
+
+      },
+      render: function() {
+        var options = this.props.map(function(name, i) {
+          return <option value={name} key={i}>{name}</option>;
+        });
+
+        return (
+          <select>
+            {options}
+          </select>
+        );
+      }
+    });
+    </script>
+
+
+    <script type="text/babel">
+    var WishDetailList = React.createClass({
+      getInitialState: function() {
+        return {
+          "음식": ["치킨", "피자", "카레", "맥주", "갈비", "삼겹살", "김치찌개", "탕수육"],
+          "여행": ["일본", "프랑스", "몽골", "러시아", "미국", "호주", "북한"],
+          "물건": ["RC카", "옷", "신발", "시계", "노트북", "PS4", "책상", "의자"]
+        };
+      },
+      render: function() {
+        console.log('WishDetailList', this.props.selectedItem);
+
+        var wishArray = this.state;
+        var items = wishArray[this.props.selectedItem];
+        var options = items.map(function(name, i) {
+          return <option value={name} key={i}>{name}</option>;
+        });
+
+        return (
+          <select>
+            {options}
+          </select>
+        );
+      }
+    });
 
     // select options wishlist 음식, 여행, 물건
     var WishTypeList = React.createClass({
@@ -53,32 +135,6 @@
         );
       }
     });
-
-    var WishDetailList = React.createClass({
-      getInitialState: function() {
-        return {
-          "음식": ["치킨", "피자", "카레", "맥주", "갈비", "삼겹살", "김치찌개", "탕수육"],
-          "여행": ["일본", "프랑스", "몽골", "러시아", "미국", "호주", "북한"],
-          "물건": ["RC카", "옷", "신발", "시계", "노트북", "PS4", "책상", "의자"]
-        };
-      },
-      render: function() {
-        console.log('WishDetailList', this.props.selectedItem);
-
-        var wishArray = this.state;
-        var items = wishArray[this.props.selectedItem];
-        var options = items.map(function(name, i) {
-          return <option value={name} key={i}>{name}</option>;
-        });
-
-        return (
-          <select>
-            {options}
-          </select>
-        );
-      }
-    });
-
 
     var Profile = React.createClass({
       getDefaultProps: function() {
@@ -127,22 +183,6 @@
       <Profile id="123" obj={{name: 'PJS'}} age={32} />,
       document.querySelector('#example')
     );
-
-    /*
-    var WishListItems = React.createClass({
-      getInitialState: function() {
-        return {
-          selectedItem: "음식"
-        };
-      },
-      render: function() {
-        var wishListItem = ['음식', '여행', '물건'];
-
-        return (
-          <option></option>
-        );
-      });
-    });*/
     </script>
   </body>
 </html>
