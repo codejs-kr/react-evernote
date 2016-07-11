@@ -1,5 +1,5 @@
 // webpack.config.js
-var path = require('path')
+var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -8,7 +8,7 @@ var BUILD_DIR  = path.resolve(__dirname, 'src');
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost:7000',
     'webpack/hot/dev-server',
     APP_DIR + '/index.jsx'    // file extension after index
   ],
@@ -40,4 +40,4 @@ module.exports = {
     hot: true
   },
   watch: true
-}
+};
