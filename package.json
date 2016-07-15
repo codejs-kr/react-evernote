@@ -18,6 +18,6 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "build": "webpack-dev-server --config webpack.config.js"
+    "start": "webpack-dev-server --host localhost --port 7000"
   }
 }

@@ -6,13 +6,15 @@ var AsideMenu = require('./aside.jsx');
 var NoteList = require('./notelist.jsx');
 var Content = require('./content.jsx');
 
+console.log(123);
+
 /*
   Wrap (Parent)
 */
 var Wrap = React.createClass({
   getInitialState: function() {
     return {
-      currentPage: "목록",
+      currentPage: "신규",
       currentNoteIdx: 1
     };
   },

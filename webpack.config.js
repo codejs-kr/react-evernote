@@ -12,6 +12,7 @@ module.exports = {
     'webpack/hot/dev-server',
     APP_DIR + '/index.jsx'    // file extension after index
   ],
+  devtool: 'source-map',
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
