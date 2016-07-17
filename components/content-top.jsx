@@ -7,11 +7,21 @@ var TopActions = React.createClass({
           <div>Tag Section</div>
         </div>
         <div id="right-action">
-          <button type="button" id="btn-favorite">즐겨찾기</button>
-          <button type="button" id="btn-info">노트정보</button>
-          <button type="button" id="btn-delete">삭제</button>
-          <button type="button" id="btn-share">공유</button>
-          <button type="button" id="btn-fullscreen">펼치기</button>
+          <button type="button" id="btn-favorite" title="즐겨찾기">
+            <i className="fa fa-star fa-lg"></i>
+          </button>
+          <button type="button" id="btn-info" title="노트정보">
+            <i className="fa fa-info-circle fa-lg"></i>
+          </button>
+          <button type="button" id="btn-delete" title="삭제">
+            <i className="fa fa-trash fa-lg"></i>
+          </button>
+          <button type="button" id="btn-share" title="공유">
+            <i className="fa fa-share-alt fa-lg"></i>
+          </button>
+          <button type="button" id="btn-fullscreen" title="전체화면">
+            <i className="fa fa-arrows-alt fa-lg"></i>
+          </button>
         </div>
       </section>
     );
