@@ -4,7 +4,11 @@ var TopActions = React.createClass({
     return (
       <section id="top-action">
         <div id="left-action">
-          <div>Tag Section</div>
+          <div id="tags">
+            <span>개발</span>
+            <span>Javascript</span>
+            <span>WebRTC</span>
+          </div>
         </div>
         <div id="right-action">
           <button type="button" id="btn-favorite" title="즐겨찾기">

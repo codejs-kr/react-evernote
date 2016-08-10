@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a66f950f9555739dcf81"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e3ab3ef76676eed8b906"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -8258,7 +8258,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html, body, body * { margin: 0; padding: 0; }\nbody { font-size: 14px; }\nbutton { cursor: pointer; }\nselect { margin: 5px; min-width: 100px; }\n.red { background: red; }\n.green { background: green; }\n.yellow { background: yellow; }\n\n#wrap { position: absolute; width: 100%; height: 100%; }\n#wrap > div { display: flex; height: 100%; }\n#wrap:after { display: block; content: \"\"; clear: both; }\n#ex2 { padding: 20px; }\naside {\n  float: left; padding: 12px 12px 24px 17px; background: #f8f8f8;\n  text-align: center; border: 1px solid #ececec;\n}\naside img { margin-bottom: 30px; }\naside ul { list-style: none; margin: 0; padding: 0; }\naside a {\n  display: block; padding: 10px 8px; background: rgba(67,138,254,0.3);\n  border-bottom: solid 1px #ebebeb; text-decoration: none; color: #000;\n}\naside a:hover { background: rgba(67,138,254,0.5); }\naside .active a { color: #fff; font-weight: bold; background: rgba(67,138,254,1); }\n#note-list {\n  float: left; width: 350px; box-sizing: border-box;\n  border-right: 1px solid #ececec;\n}\n#head-title {\n  display: block; padding: 15px 20px;\n  font-size: 2em; font-weight: normal; color: #878787;\n}\n#head-info {\n  margin: 0; padding: 10px 20px;\n  border-bottom: solid 3px #ececec; color: #878787;\n}\n#note-list ul {\n  list-style: none; height: calc(100% - (108px)); overflow: auto;\n}\n#note-list li { position: relative; padding: 0 20px 0 20px; cursor: pointer; }\n#note-list li:hover div div { background: rgba(45, 190, 95, 0.9); }\n#note-list li:hover div * { color: #fff !important; }\n#note-list .list-wrap {\n  padding: 15px 0; height: 95px;\n  border-bottom: solid 1px #ececec;\n}\n#note-list .list-wrap > div {\n  position: absolute; top: 0; left: 0;\n  padding: 10px 20px;\n}\n#note-list .list-wrap > div strong {\n  display: block; margin-bottom: 5px; font-size: 1.2em;\n}\n#note-list .list-wrap > div span {\n  display: block; margin-bottom: 5px; font-size: 0.8em; color: #878787;\n}\n#note-list .list-wrap > div p {\n  height: 56px; overflow: hidden;\n  font-size: 0.9em; line-height: 1.5; color: #878787;\n}\n\n/*\n * content\n */\n#content {\n  float: left; display: flex; flex-direction: column;\n  width: calc(100% - 426px);\n  border-left: solid 1px #000;\n}\n#content h1 { margin: 0; }\n\n#top-action { padding: 15px; }\n#top-action:after { display: block; content: \"\"; clear: both; }\n#top-action button { margin-right: 5px; width: 26px; height: 26px; vertical-align: top; }\n#top-action button:last-child { margin: 0; }\n#left-action { float: left; }\n#right-action { float: right; }\n\n#content main {\n  flex: 1; padding: 10px 20px 20px; overflow-y: auto; height: 100%;\n}\n#content h1 {\n  padding: 5px 0;\n  border-bottom: solid 1px rgba(0,0,0,0.1);\n}\n#content article {  }\n#content textarea {\n  width: 100%; height: 900px;\n  background: orange; font-size: 14px;\n}\n", ""]);
+	exports.push([module.id, "html, body, body * { margin: 0; padding: 0; }\r\nbody { font-size: 14px; }\r\nbutton { cursor: pointer; }\r\nselect { margin: 5px; min-width: 100px; }\r\n.red { background: red; }\r\n.green { background: green; }\r\n.yellow { background: yellow; }\r\n\r\n#wrap { position: absolute; width: 100%; height: 100%; }\r\n#wrap > div { display: flex; height: 100%; }\r\n#wrap:after { display: block; content: \"\"; clear: both; }\r\n#ex2 { padding: 20px; }\r\naside {\r\n  float: left; padding: 12px 12px 24px 17px; background: #f8f8f8;\r\n  text-align: center; border: 1px solid #ececec;\r\n}\r\naside img { margin-bottom: 30px; }\r\naside ul { list-style: none; margin: 0; padding: 0; }\r\naside a {\r\n  display: block; padding: 10px 8px; background: rgba(67,138,254,0.3);\r\n  border-bottom: solid 1px #ebebeb; text-decoration: none; color: #000;\r\n}\r\naside a:hover { background: rgba(67,138,254,0.5); }\r\naside .active a { color: #fff; font-weight: bold; background: rgba(67,138,254,1); }\r\n#note-list {\r\n  float: left; width: 350px; box-sizing: border-box;\r\n  border-right: 1px solid #ececec;\r\n}\r\n#head-title {\r\n  display: block; padding: 15px 20px;\r\n  font-size: 2em; font-weight: normal; color: #878787;\r\n}\r\n#head-info {\r\n  margin: 0; padding: 10px 20px;\r\n  border-bottom: solid 3px #ececec; color: #878787;\r\n}\r\n#note-list ul {\r\n  list-style: none; height: calc(100% - (108px)); overflow: auto;\r\n}\r\n#note-list li { position: relative; padding: 0 20px 0 20px; cursor: pointer; }\r\n#note-list li:hover div div { background: rgba(45, 190, 95, 0.9); }\r\n#note-list li:hover div * { color: #fff !important; }\r\n#note-list .list-wrap {\r\n  padding: 15px 0; height: 95px;\r\n  border-bottom: solid 1px #ececec;\r\n}\r\n#note-list .list-wrap > div {\r\n  position: absolute; top: 0; left: 0;\r\n  padding: 10px 20px;\r\n}\r\n#note-list .list-wrap > div strong {\r\n  display: block; margin-bottom: 5px; font-size: 1.2em;\r\n}\r\n#note-list .list-wrap > div span {\r\n  display: block; margin-bottom: 5px; font-size: 0.8em; color: #878787;\r\n}\r\n#note-list .list-wrap > div p {\r\n  height: 56px; overflow: hidden;\r\n  font-size: 0.9em; line-height: 1.5; color: #878787;\r\n}\r\n\r\n/*\r\n * content\r\n */\r\n#content {\r\n  float: left; display: flex; flex-direction: column;\r\n  width: calc(100% - 426px); border-left: solid 1px #000;\r\n}\r\n#content h1 { margin: 0; }\r\n\r\n#top-action { padding: 15px; }\r\n#top-action:after { display: block; content: \"\"; clear: both; }\r\n#top-action button {\r\n  margin-right: 5px; width: 28px; height: 28px; vertical-align: top;\r\n  background: #fff; border: solid 1px #2dbe60; border-radius: 3px; color: #2dbe60;\r\n}\r\n#top-action button:hover { color: #fff; background: #2dbe60; }\r\n#top-action button:last-child { margin: 0; }\r\n#left-action { float: left; }\r\n#right-action { float: right; }\r\n\r\n#content main {\r\n  flex: 1; padding: 10px 20px 20px; overflow-y: auto; height: 100%;\r\n}\r\n#content h1 {\r\n  padding: 5px 0;\r\n  border-bottom: solid 1px rgba(0,0,0,0.1);\r\n}\r\n#content article {  }\r\n#content textarea {\r\n  width: 100%; height: 900px;\r\n  background: orange; font-size: 14px;\r\n}\r\n", ""]);
 	
 	// exports
 
@@ -29654,28 +29654,28 @@
 	        { id: "right-action" },
 	        React.createElement(
 	          "button",
-	          { type: "button", id: "btn-favorite" },
-	          "즐겨찾기"
+	          { type: "button", id: "btn-favorite", title: "즐겨찾기" },
+	          React.createElement("i", { className: "fa fa-star fa-lg" })
 	        ),
 	        React.createElement(
 	          "button",
-	          { type: "button", id: "btn-info" },
-	          "노트정보"
+	          { type: "button", id: "btn-info", title: "노트정보" },
+	          React.createElement("i", { className: "fa fa-info-circle fa-lg" })
 	        ),
 	        React.createElement(
 	          "button",
-	          { type: "button", id: "btn-delete" },
-	          "삭제"
+	          { type: "button", id: "btn-delete", title: "삭제" },
+	          React.createElement("i", { className: "fa fa-trash fa-lg" })
 	        ),
 	        React.createElement(
 	          "button",
-	          { type: "button", id: "btn-share" },
-	          "공유"
+	          { type: "button", id: "btn-share", title: "공유" },
+	          React.createElement("i", { className: "fa fa-share-alt fa-lg" })
 	        ),
 	        React.createElement(
 	          "button",
-	          { type: "button", id: "btn-fullscreen" },
-	          "펼치기"
+	          { type: "button", id: "btn-fullscreen", title: "전체화면" },
+	          React.createElement("i", { className: "fa fa-arrows-alt fa-lg" })
 	        )
 	      )
 	    );
