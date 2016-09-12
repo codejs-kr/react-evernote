@@ -8,13 +8,16 @@ var Content = require('./content.jsx');
 
 /*
   TODO
-  - 리스트 선택시 우측 컨텐츠영역 갱신
-  - 컨텐츠 제목 input으로 변경
+  - 리스트 선택시 우측 컨텐츠영역 갱신 O
+  - 컨텐츠 제목 input으로 변경 O
   - Firebase DB 검토
   - 컨텐츠 변경시 서버에 전송
   - 신규 목록
   - 리스트 검색
-  - 테그 등록
+  - 테그
+    - 추가
+    - 변경
+    - 삭제
   - 메뉴
     - 삭제
     - 즐겨찾기
@@ -29,18 +32,20 @@ var Content = require('./content.jsx');
 var Wrap = React.createClass({
   getInitialState: function() {
     return {
-      currentPage: "신규",
-      currentNoteIdx: 1
+      currentAction: "신규",
+      currentNoteIdx: 0,
+      currentNoteData: null
     };
   },
   componentDidMount: function() {
-    console.log('componentDidMount');
-    console.log('this.refs.asideMenu', this.refs.asideMenu);
-    console.log('this.refs.asideMenu', ReactDOM.findDOMNode(this.refs.asideMenu));
+    // console.log('componentDidMount');
+    // console.log('this.refs.asideMenu', this.refs.asideMenu);
+    // console.log('this.refs.asideMenu', ReactDOM.findDOMNode(this.refs.asideMenu));
 
     this.serverRequest = $.get(this.props.url, function(data) {
       var data = data.returnData;
       console.log('데이타', data);
+
       this.setState({
         lists: data
       });
@@ -49,29 +54,37 @@ var Wrap = React.createClass({
   componentWillUnmount: function() {
     this.serverRequest.abort();
   },
-  handleClick: function(event) {
-    console.log('Wrap handleClick', event);
+  handleAsideClick: function(event) {
+    console.log('Wrap handleAsideClick', event);
     var menuName = event.target.href.split('#')[1];
 
     this.setState({
-      currentPage: menuName
+      currentAction: menuName
+    });
+  },
+  handleNoteData: function(data) {
+    this.setState({
+      currentNoteData: data
     });
   },
   render: function() {
-    console.log('render');
+    //console.log('render');
     return (
       <div>
         <AsideMenu
           ref="asideMenu"
           menus={[this.props.menus]}
-          current={this.state.currentPage}
-          handleClick={this.handleClick}
+          currentAction={this.state.currentAction}
+          handleAsideClick={this.handleAsideClick}
         />
         <NoteList
           lists={this.state.lists}
-          current={this.state.currentNoteIdx}
+          currentNoteIdx={this.state.currentNoteIdx}
+          handleNoteData={this.handleNoteData}
         />
-        <Content current={this.state.currentPage} />
+        <Content
+          currentNoteData={this.state.currentNoteData}
+        />
       </div>
     );
   }

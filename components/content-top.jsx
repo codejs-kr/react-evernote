@@ -1,14 +1,12 @@
 var React = require('react');
+var Tags = require('./content-top-tags.jsx');
+
 var TopActions = React.createClass({
   render: function() {
     return (
       <section id="top-action">
         <div id="left-action">
-          <div id="tags">
-            <span>개발</span>
-            <span>Javascript</span>
-            <span>WebRTC</span>
-          </div>
+          <Tags currentNoteData={this.props.currentNoteData} />
         </div>
         <div id="right-action">
           <button type="button" id="btn-favorite" title="즐겨찾기">

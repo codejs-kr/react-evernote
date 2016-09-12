@@ -7,13 +7,13 @@ var Article = require('./content-article.jsx');
 */
 var Content = React.createClass({
   render: function() {
-    console.log('Content render', this.props.current);
-    
+    console.log('Content render', this.props.currentNoteData);
+
     var content = null;
     return (
       <section id="content">
-        <TopActions />
-        <Article />
+        <TopActions currentNoteData={this.props.currentNoteData} />
+        <Article currentNoteData={this.props.currentNoteData} />
       </section>
     );
   }

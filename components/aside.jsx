@@ -10,8 +10,8 @@ var AsideMenu = React.createClass({
       var url = "#" + name;
 
       return (
-        <li key={i} className={name == that.props.current ? "active": ""}>
-          <a href={url} onClick={that.props.handleClick}>{name}</a>
+        <li key={i} className={name == that.props.currentAction ? "active": ""}>
+          <a href={url} onClick={that.props.handleAsideClick}>{name}</a>
         </li>
       );
     });
