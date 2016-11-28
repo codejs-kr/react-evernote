@@ -12,8 +12,8 @@ var Content = require('./content.jsx');
   - 컨텐츠 제목 input으로 변경 O
   - Firebase DB 검토
   - 컨텐츠 변경시 서버에 전송
-  - 신규 목록
-  - 리스트 검색
+  - 신규 노트
+  - 노트 검색
   - 테그
     - 추가
     - 변경
@@ -23,7 +23,7 @@ var Content = require('./content.jsx');
     - 즐겨찾기
     - 정보보기
     - 이메일 공유
-    - 전체화면
+    - 전체화면모드
 */
 
 /*

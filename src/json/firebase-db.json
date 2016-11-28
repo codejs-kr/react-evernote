@@ -1,0 +1,43 @@
+{
+  "users": {
+    "aaa@a.com": {
+      "noteList": {
+        "n1": {
+          "title": "노트 제목6",
+          "date": "2016-01-06",
+          "tags": ["개발", "WebRTC", "JavaScript", "테스트"],
+          "content": "컨텐츠 내용 입니다.",
+          "isFavorite": true
+        },
+        "n2": {
+          "title": "노트 제목5",
+          "date": "2016-01-05",
+          "tags": ["개발", "WebRTC", "JavaScript"],
+          "content": "컨텐츠 내용 입니다.",
+          "isFavorite": false
+        }
+      },
+
+      "noteDetail": {
+        "n1": "컨텐츠1 내용 입니다.",
+        "n2": "컨텐츠2 내용 입니다."
+      }
+    }
+  }
+}
+
+
+데이터 구조 평면화
+
+노트 리스트
+users/{userID}/noteList
+
+노트 상세
+users/{userID}/noteDetail/n1
+
+
+FirebaseDB
+저장 /notes/$uid
+검색 /notes/$uid/title, content
+수정 /notes/$uid/*
+삭제 /notes/$uid

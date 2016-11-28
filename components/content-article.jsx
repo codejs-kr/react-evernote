@@ -23,8 +23,11 @@ var Article = React.createClass({
     console.log('변경확인', this.props.currentNoteData);
 
     var data = this.props.currentNoteData;
-    $('h1 input').val(data.title || '');
+    if (!data) {
+      return false;
+    }
 
+    $('h1 input').val(data.title || '');
     if (editor.target) {
       if (data && data.content) {
         editor.update(data.content);

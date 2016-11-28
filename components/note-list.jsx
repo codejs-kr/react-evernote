@@ -20,7 +20,7 @@ var NoteList = React.createClass({
 
     // 기본 첫번째 리스트 선택
     if (!isFirstTrigger) {
-      $('.list-wrap:eq(0)').click();
+      $('.list-wrap:eq(2)').click();
       isFirstTrigger = true;
     }
   },
