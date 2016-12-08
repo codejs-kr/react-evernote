@@ -1,13 +1,12 @@
 /*
   firebase interfaces
-
   TODO
 */
 $.note = {
   createUser: function(userId, name, email) {
     firebase.database().ref('users/' + 'admin').set({
-      'username': '관리자',
-      'email': 'admin@evernote.com'
+      'name': 'codeJS',
+      'email': 'dodortus@gmail.com'
     });
   },
   // 저장
@@ -24,14 +23,15 @@ $.note = {
     };
 
     // Get a key for a new Post.
-    var noteKey = firebase.database().ref('users/' + 'admin').child('note-list').push().key;
+    var noteKey = firebase.database().ref('users/' + 'admin').child('noteList').push().key;
+    var listData = {};
+    var detailData = {};
+    listData[noteKey] = note.info;
+    detailData[noteKey] = note.content;
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    note.info.noteKey = noteKey;
-    updates['/note-list/' + noteKey] = note.info;
-    updates['/note-detail/' + noteKey] = note.content;
-    return firebase.database().ref('users/' + 'admin').update(updates);
+    firebase.database().ref('noteList/' + 'admin').update(listData);
+    firebase.database().ref('noteDetail/' + 'admin').update(detailData);
   },
   // 노트 불러오기
   getNote: function() {
@@ -42,3 +42,16 @@ $.note = {
 
   }
 };
+
+// 변경 리스닝
+firebase.database().ref('noteList/' + 'admin').on('value', function(data) {
+  console.log('변경 리스닝', data.val());
+});
+
+// 한번 읽기
+firebase.database().ref('noteList/' + 'admin').once('value').then(function(data) {
+  console.log('한번 읽기', data.val());
+});
+
+// 삭제
+//firebase.database().ref('noteDetail/' + 'admin/' + 'noteid').remove()

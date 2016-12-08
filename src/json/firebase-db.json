@@ -1,3 +1,11 @@
+
+계층구조
+  - 노트 리스트
+  - users/$uid/noteList/
+
+  - 노트 상세
+  - users/$uid/noteDetail/$n1
+
 {
   "users": {
     "aaa@a.com": {
@@ -26,18 +34,46 @@
   }
 }
 
+------------------------------------------------------------------------
 
 데이터 구조 평면화
+  - 저장 /notes/$uid (수정)
+  - 검색 /notes/$uid/title, content
+  - 삭제 /notes/$uid
 
-노트 리스트
-users/{userID}/noteList
+  - /users/$uid
+  - /noteList/$uid
+  - /noteDetail/$uid/$n1
 
-노트 상세
-users/{userID}/noteDetail/n1
-
-
-FirebaseDB
-저장 /notes/$uid
-검색 /notes/$uid/title, content
-수정 /notes/$uid/*
-삭제 /notes/$uid
+{
+  "users": {
+    "$uid": {
+      "name": "codeJS",
+      "email": "dodortus@gmail.com"
+    }
+  },
+  "noteList": {
+    "$uid": {
+      "n1": {
+        "title": "노트 제목6",
+        "date": "2016-01-06",
+        "tags": ["개발", "WebRTC", "JavaScript", "테스트"],
+        "preview": "컨텐츠 내용 입니다.",
+        "isFavorite": true
+      },
+      "n2": {
+        "title": "노트 제목5",
+        "date": "2016-01-05",
+        "tags": ["개발", "WebRTC", "JavaScript"],
+        "preview": "컨텐츠 내용 입니다.",
+        "isFavorite": false
+      }
+    }
+  },
+  "noteDetail": {
+    "$uid": {
+      "n1": "컨텐츠1 내용 입니다.",
+      "n2": "컨텐츠2 내용 입니다."
+    }
+  }
+}
