@@ -1,16 +1,22 @@
 /*
   firebase interfaces
+  - 저장 firebase.database().ref('noteList/' + 'admin').update(listData);
+  - 삭제 firebase.database().ref('noteDetail/' + 'admin/' + 'noteid').remove()
+
   TODO
+  - userId 동적으로 받아오기
+
 */
 $.note = {
+  userId: null,
   createUser: function(userId, name, email) {
     firebase.database().ref('users/' + 'admin').set({
       'name': 'codeJS',
       'email': 'dodortus@gmail.com'
     });
   },
-  // 저장
-  setNote: function() {
+  // 신규
+  createNote: function() {
     var note = {
       info: {
         "title": "노트 제목6",
@@ -33,13 +39,47 @@ $.note = {
     firebase.database().ref('noteList/' + 'admin').update(listData);
     firebase.database().ref('noteDetail/' + 'admin').update(detailData);
   },
-  // 노트 불러오기
-  getNote: function() {
+  updateNote: function(data) {
+    console.log('updateNote', arguments);
+    // data.id 필수
+    // data.isFavorite
+    // data.tags
+    // data.title
+    // data.content
 
+    var listData = {};
+    var detailData = {};
+    detailData[data.id] = data.content;
+
+    // 본문 업데이트
+    if (data.content) {
+      firebase.database().ref('noteDetail/' + 'admin').update(detailData);
+    } else {
+
+    }
+  },
+  // 노트 불러오기
+  readNote: function(id, callback) {
+    console.log('readNote', arguments);
+
+    firebase.database().ref('noteDetail/' + 'admin' + '/' + id).once('value').then(function(data) {
+      callback && callback(data.val());
+    });
   },
   // 노트 삭제
-  removeNote: function() {
+  deleteNote: function(id) {
+    // data.noteId
+    firebase.database().ref('noteList/' + 'admin/' + id).remove();
+    firebase.database().ref('noteDetail/' + 'admin/' + id).remove();
+  },
+  // 노트 리스트 불러오기
+  readList: function(callback) {
+    // 한번 읽기
+    firebase.database().ref('noteList/' + 'admin').once('value').then(function(data) {
+      //console.log('한번 읽기', data.val());
 
+      callback && callback(data.val());
+    });
   }
 };
 
@@ -47,11 +87,3 @@ $.note = {
 firebase.database().ref('noteList/' + 'admin').on('value', function(data) {
   console.log('변경 리스닝', data.val());
 });
-
-// 한번 읽기
-firebase.database().ref('noteList/' + 'admin').once('value').then(function(data) {
-  console.log('한번 읽기', data.val());
-});
-
-// 삭제
-//firebase.database().ref('noteDetail/' + 'admin/' + 'noteid').remove()

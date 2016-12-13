@@ -7,8 +7,14 @@ var NoteList = React.createClass({
     var that = this;
 
     $('#wrap').on('click', '.list-wrap', function() {
-      var data = $(this).data('obj');
-      that.props.handleNoteData(data);
+      var targetNoteData = $(this).data('obj');
+      var noteId = $(this).data('id');
+      var data = $.note.readNote(noteId, function(data) {
+        console.log('데이터', data);
+        targetNoteData.content = data;
+        targetNoteData.id = noteId;
+        that.props.handleNoteData(targetNoteData);
+      });
 
       // active
       $('#note-list .active').removeClass('active');
@@ -26,6 +32,7 @@ var NoteList = React.createClass({
   },
   render: function() {
     var that = this;
+    var count = 0;
 
     if (!that.props.lists) {
       console.log('목록 없음');
@@ -33,22 +40,22 @@ var NoteList = React.createClass({
     }
 
     // 목록 생성
-    var notes = that.props.lists.map(function(obj, i) {
+    var notes = Object.keys(that.props.lists).map(function(key, i) {
       //console.log('여기다', obj, i);
-
-      var id = obj.id;
+      var obj = that.props.lists[key];
       var title = obj.title;
       var date = obj.date;
-      var content = obj.content;
+      var preview = obj.preview;
       var obj = JSON.stringify(obj);
+      count++;
 
       return (
         <li key={i} className={i == that.props.currentNoteIdx ? "active": ""}>
-          <div className="list-wrap" data-id={id} data-obj={obj}>
+          <div className="list-wrap" data-id={key} data-obj={obj}>
             <div>
               <strong>{title}</strong>
               <span>{date}</span>
-              <p>{content}</p>
+              <p>{preview}</p>
             </div>
           </div>
         </li>
@@ -58,7 +65,7 @@ var NoteList = React.createClass({
     return (
       <section id="note-list">
         <strong id="head-title">노트</strong>
-        <p id="head-info">{that.props.lists.length}개의 노트</p>
+        <p id="head-info">{count}개의 노트</p>
         <ul>
           {notes}
         </ul>

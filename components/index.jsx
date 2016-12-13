@@ -41,15 +41,14 @@ var Wrap = React.createClass({
     // console.log('componentDidMount');
     // console.log('this.refs.asideMenu', this.refs.asideMenu);
     // console.log('this.refs.asideMenu', ReactDOM.findDOMNode(this.refs.asideMenu));
-
-    this.serverRequest = $.get(this.props.url, function(data) {
-      var data = data.returnData;
+    var that = this;
+    $.note.readList(function(data) {
       console.log('데이타', data);
 
-      this.setState({
+      that.setState({
         lists: data
       });
-    }.bind(this));
+    });
   },
   componentWillUnmount: function() {
     this.serverRequest.abort();
@@ -91,6 +90,6 @@ var Wrap = React.createClass({
 });
 
 ReactDOM.render(
-  <Wrap menus={["목록", "신규", "검색"]} url="./json/note-list.json" />,
+  <Wrap menus={["목록", "신규", "검색"]} />,
   document.querySelector('#wrap')
 );
