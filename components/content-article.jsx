@@ -4,7 +4,7 @@ var Article = React.createClass({
   render: function() {
     return (
       <main>
-        <h1><input type="text" value="불러오는 중입니다..." placeholder="제목을 입력하세요."></input></h1>
+        <h1><input type="text" placeholder="제목을 입력하세요." /></h1>
         <article>
           <textarea id="editor" placeholder="컨텐츠 영역"></textarea>
         </article>
@@ -19,6 +19,9 @@ var Article = React.createClass({
     //   $('h1').html(data.title);
     //   editor.init(data.content);
     // }
+    $('h1 input').keyup(function(e) {
+      editor.onKeyup(e, true);
+    });
   },
   componentDidUpdate: function() {
     console.log('변경확인', this.props.currentNoteData);
@@ -28,10 +31,11 @@ var Article = React.createClass({
       return false;
     }
 
-    noteId = data.id;
     $('h1 input').val(data.title || '');
     if (editor.target) {
-      if (data && data.content) {
+      // 현재 작성중인 노트일때 업데이트 안함.
+      if (data.id != noteId) {
+        console.log('본문 업데이트')
         editor.update(data.content);
       }
     } else {
@@ -39,6 +43,9 @@ var Article = React.createClass({
         editor.init(data.content);
       }
     }
+
+    // 현재 노트 ID저장
+    noteId = data.id;
   }
 });
 
@@ -48,12 +55,11 @@ var editor = {
   init: function(data) {
     CKEDITOR.replace('editor');
     var editorObj = CKEDITOR.instances.editor;
-    this.target = editorObj;
-    editorObj.setData(data);
-
     var config = CKEDITOR.config;
+    editorObj.setData(data);
     config.height = '80em';
-    console.log('editorObj', editorObj, 'config', config);
+    this.target = editorObj;
+    //console.log('editorObj', editorObj, 'config', config);
 
     editorObj.on('contentDom', function() {
       var editable = editorObj.editable();
@@ -70,18 +76,29 @@ var editor = {
   update: function(data) {
     this.target.setData(data);
   },
+  getTitle: function() {
+    return $('h1 input').val();
+  },
   getContent: function() {
     return this.target.getData();
   },
-  save: function() {
+  save: function(isTitle) {
     console.log('save', arguments);
-    var data = this.getContent();
 
-    // API 저장
-    $.note.updateNote({
-      id: noteId,
-      content: data
-    });
+    var data = null;
+    if (isTitle) {
+      data = this.getTitle();
+      $.note.updateTitle({
+        id: noteId,
+        title: data
+      });
+    } else {
+      data = this.getContent();
+      $.note.updateNote({
+        id: noteId,
+        content: data
+      });
+    }
     // changeState('saving');
     // api.note.save(data, function() {
     //   changeState('saved');
@@ -91,21 +108,21 @@ var editor = {
   },
   /**
    * saveRequest
-   * 변경사항이 생길때 1.5초 초과시 save() 실행
+   * 변경사항이 생길때 1초 초과시 save() 실행
    */
-  saveRequest: function() {
+  saveRequest: function(isTitle) {
     var that = this;
     if (this.timeID) {
       clearTimeout(this.timeID);
     }
 
     this.timeID = setTimeout(function() {
-      that.save();
-    }, 1500);
+      that.save(isTitle);
+    }, 500);
   },
-  onKeyup: function(event) {
+  onKeyup: function(event, isTitle) {
     console.log('onKeyEvent', arguments);
-    this.saveRequest();
+    this.saveRequest(isTitle);
   }
 }
 

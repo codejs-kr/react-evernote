@@ -10,10 +10,11 @@ var Content = require('./content.jsx');
   TODO
   - 리스트 선택시 우측 컨텐츠영역 갱신 O
   - 컨텐츠 제목 input으로 변경 O
-  - Firebase DB 검토
-  - 컨텐츠 변경시 서버에 전송
+  - Firebase DB 검토 O
+  - 컨텐츠 변경시 서버에 전송 O
   - 신규 노트
   - 노트 검색
+  - 테그 분류
   - 테그
     - 추가
     - 변경
@@ -32,7 +33,7 @@ var Content = require('./content.jsx');
 var Wrap = React.createClass({
   getInitialState: function() {
     return {
-      currentAction: "신규",
+      currentAction: "목록",
       currentNoteIdx: 0,
       currentNoteData: null
     };
@@ -42,6 +43,8 @@ var Wrap = React.createClass({
     // console.log('this.refs.asideMenu', this.refs.asideMenu);
     // console.log('this.refs.asideMenu', ReactDOM.findDOMNode(this.refs.asideMenu));
     var that = this;
+
+    // 최초 목록 로드
     $.note.readList(function(data) {
       console.log('데이타', data);
 
@@ -49,6 +52,13 @@ var Wrap = React.createClass({
         lists: data
       });
     });
+
+    // 목록 변경 리스닝
+    $.note.onUpdateList = function(data) {
+      that.setState({
+        lists: data
+      });
+    };
   },
   componentWillUnmount: function() {
     this.serverRequest.abort();
@@ -60,6 +70,12 @@ var Wrap = React.createClass({
     this.setState({
       currentAction: menuName
     });
+
+    if (menuName.match('신규')) {
+      console.log('신규');
+      $.note.createNote();
+      return false;
+    }
   },
   handleNoteData: function(data) {
     this.setState({
@@ -90,6 +106,6 @@ var Wrap = React.createClass({
 });
 
 ReactDOM.render(
-  <Wrap menus={["목록", "신규", "검색"]} />,
+  <Wrap menus={["목록", "신규", "분류"]} />,
   document.querySelector('#wrap')
 );

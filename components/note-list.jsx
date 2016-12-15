@@ -7,10 +7,10 @@ var NoteList = React.createClass({
     var that = this;
 
     $('#wrap').on('click', '.list-wrap', function() {
-      var targetNoteData = $(this).data('obj');
-      var noteId = $(this).data('id');
+      var targetNoteData = JSON.parse($(this).attr('data-obj')); // data()로 할경우 이전 정보 갱신 안되는 증상 발생
+      var noteId = $(this).attr('data-id'); // data()로 할경우 이전 정보 갱신 안되는 증상 발생
       var data = $.note.readNote(noteId, function(data) {
-        console.log('데이터', data);
+        console.log('ID', noteId, data);
         targetNoteData.content = data;
         targetNoteData.id = noteId;
         that.props.handleNoteData(targetNoteData);
@@ -20,13 +20,15 @@ var NoteList = React.createClass({
       $('#note-list .active').removeClass('active');
       $(this).parent().addClass('active');
     });
+
+    $('.list-wrap:first').click();
   },
   componentDidUpdate: function() {
     console.log('NoteList componentDidUpdate', this.props.lists);
 
     // 기본 첫번째 리스트 선택
     if (!isFirstTrigger) {
-      $('.list-wrap:eq(2)').click();
+      $('.list-wrap:first').click();
       isFirstTrigger = true;
     }
   },
@@ -43,7 +45,7 @@ var NoteList = React.createClass({
     var notes = Object.keys(that.props.lists).map(function(key, i) {
       //console.log('여기다', obj, i);
       var obj = that.props.lists[key];
-      var title = obj.title;
+      var title = obj.title ? obj.title : "제목없음";
       var date = obj.date;
       var preview = obj.preview;
       var obj = JSON.stringify(obj);
@@ -55,7 +57,7 @@ var NoteList = React.createClass({
             <div>
               <strong>{title}</strong>
               <span>{date}</span>
-              <p>{preview}</p>
+              <article>{preview}</article>
             </div>
           </div>
         </li>
@@ -65,6 +67,12 @@ var NoteList = React.createClass({
     return (
       <section id="note-list">
         <strong id="head-title">노트</strong>
+        <div id="search-wrap">
+          <button type="button" id="btn-search">
+            <i className="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
+
         <p id="head-info">{count}개의 노트</p>
         <ul>
           {notes}

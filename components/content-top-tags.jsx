@@ -4,7 +4,7 @@ var Tags = React.createClass({
     var tags = null;
     var tagsData = this.props.currentNoteData && this.props.currentNoteData.tags;
 
-    console.log('tagsData', this.props.currentNoteData);
+    //console.log('tagsData', this.props.currentNoteData);
     if (tagsData) {
       tags = tagsData.map(function(data, i) {
         return (

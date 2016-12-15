@@ -2,6 +2,25 @@ var React = require('react');
 var Tags = require('./content-top-tags.jsx');
 
 var TopActions = React.createClass({
+  componentDidMount: function() {
+    $('#right-action button').click(function() {
+      var command = $(this).attr('id').split('-')[1];
+
+      if (command == 'delete') {
+        // TODO noteId 통합관리 필요
+        var noteId = $('#note-list .active div').attr('data-id');
+        if ($('#note-list li').length === 1) {
+          alert('마지막 문서입니다. 새롭게 작성해 보세요.');
+          return false;
+        }
+
+        if (confirm('정말 삭제 하시겠습니까?')) {
+          $.note.deleteNote(noteId);
+          console.log('삭제됨');
+        }
+      }
+    });
+  },
   render: function() {
     return (
       <section id="top-action">
