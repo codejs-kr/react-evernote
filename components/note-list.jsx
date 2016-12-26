@@ -42,18 +42,19 @@ var NoteList = React.createClass({
     }
 
     // 목록 생성
-    var notes = Object.keys(that.props.lists).map(function(key, i) {
-      //console.log('여기다', obj, i);
-      var obj = that.props.lists[key];
+    var notes = that.props.lists.map(function(data, i) {
+      var obj = data;
+      var id = obj.id;
       var title = obj.title ? obj.title : "제목없음";
-      var date = obj.date;
+      var date = $.util.getDate(obj.lastUpdateDate);
       var preview = obj.preview;
       var obj = JSON.stringify(obj);
       count++;
+      console.log('여기다', obj, i);
 
       return (
         <li key={i} className={i == that.props.currentNoteIdx ? "active": ""}>
-          <div className="list-wrap" data-id={key} data-obj={obj}>
+          <div className="list-wrap" data-id={id} data-obj={obj}>
             <div>
               <strong>{title}</strong>
               <span>{date}</span>
@@ -63,6 +64,8 @@ var NoteList = React.createClass({
         </li>
       );
     });
+
+    console.log('확인 notes', notes);
 
     return (
       <section id="note-list">

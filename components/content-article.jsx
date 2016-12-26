@@ -99,6 +99,8 @@ var editor = {
         content: data
       });
     }
+
+    
     // changeState('saving');
     // api.note.save(data, function() {
     //   changeState('saved');

@@ -1,13 +1,20 @@
 /*
   firebase interfaces
   - CRUD
-    - 사용자 저장 firebase.database().ref('users/' + 'admin').set();
-    - 키생성 저장 firebase.database().ref('noteList/' + 'admin').update(listData);
-    - 삭제 firebase.database().ref('noteDetail/' + 'admin/' + 'noteid').remove();
-    - 리슨 firebase.database().ref('noteList/' + 'admin').on('value', function(data) {});
+    - 사용자 저장 firebase.database().ref('users/' + {userID}).set();
+    - 저장, 갱신 firebase.database().ref('noteList/' + {userID}).update();
+    - 읽기 firebase.database().ref('noteList/' + {userID}).once('value').then(function(data) {});
+    - 삭제 firebase.database().ref('noteList/' + {userID} + '/' + {noteID}).remove();
+    - 리슨 firebase.database().ref('noteList/' + {userID}).on('value', function(data) {});
 
   - 정렬
+    - 하하
+
   - 필터
+    - firebase.database().ref('noteList/admin').orderByChild('title').equalTo('수박').once('value')
+      .then(function(data) { console.log(data.val()); });
+
+    - .limitToLast(3)
 
   TODO
   - 인증 후 userId 동적으로 받아오기
@@ -17,16 +24,18 @@ $.note = {
   createUser: function(userId, name, email) {
     firebase.database().ref('users/' + 'admin').set({
       'name': 'codeJS',
-      'email': 'dodortus@gmail.com'
+      'email': 'dodortus@gmail.com',
+      'createDate': $.util.getTime()
     });
   },
   // 노트 생성
   createNote: function() {
-    var currentDate = $.util.getDate(); //new Date().getTime();
+    var currentDate = $.util.getTime();
     var note = {
       info: {
         "title": "",
-        "date": currentDate,
+        "createDate": currentDate,
+        "lastUpdateDate": currentDate,
         "tags": ["개발", "테그"],
         "preview": "",
         "isFavorite": false
@@ -39,6 +48,7 @@ $.note = {
     var listData = {};
     var detailData = {};
     listData[noteKey] = note.info;
+    listData[noteKey].id = noteKey;
     detailData[noteKey] = note.content;
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
@@ -64,7 +74,8 @@ $.note = {
 
     var listData = {};
     var detailData = {};
-    listData.preview = data.content;
+    listData.preview = data.content.slice(0, 150);
+    listData.lastUpdateDate = $.util.getTime();
     detailData[data.id] = data.content;
 
     // 본문 업데이트
@@ -91,18 +102,30 @@ $.note = {
   // 노트 리스트 불러오기
   readList: function(callback) {
     // 한번 읽기
-    // 필터 .limitToLast(3)
-    // 정렬
+    var result = [];
     firebase.database().ref('noteList/' + 'admin')
-    .orderByChild('date').once('value').then(function(data) {
-      callback && callback(data.val());
+    .orderByChild('lastUpdateDate')
+    .once('value').then(function(data) {
+
+      data.forEach(function(list) {
+        result.unshift(list.val());
+      });
+
+      console.log('데이터', result);
+      callback && callback(result);
     });
   },
   // 업데이트 리스닝
   onUpdateList: null
 };
 
-firebase.database().ref('noteList/' + 'admin').on('value', function(data) {
-  console.log('변경 리스닝', data.val());
-  $.note.onUpdateList(data.val());
+firebase.database().ref('noteList/' + 'admin').orderByChild('lastUpdateDate').on('value', function(data) {
+  var result = [];
+
+  data.forEach(function(list) {
+    result.unshift(list.val());
+  });
+
+  console.log('변경 리스닝', result);
+  $.note.onUpdateList(result);
 });
