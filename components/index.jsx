@@ -14,7 +14,6 @@ var Content = require('./content.jsx');
   - 컨텐츠 변경시 서버에 전송 O
   - 노트 CRUD O
   - 노트 검색
-  - 테그 분류
   - 테그 (인풋박스로 바뀌고 콤마로 구분해서 저장시 UI표현)
     - 추가
     - 변경
@@ -25,6 +24,7 @@ var Content = require('./content.jsx');
     - 정보보기
     - 이메일 공유
     - 전체화면모드
+  - 테그 분류
 */
 
 /*
@@ -34,7 +34,7 @@ var Wrap = React.createClass({
   getInitialState: function() {
     return {
       currentAction: "목록",
-      currentNoteIdx: 0,
+      currentNoteIdx: 1,
       currentNoteData: null
     };
   },
@@ -57,6 +57,10 @@ var Wrap = React.createClass({
     $.note.onUpdateList = function(data) {
       that.setState({
         lists: data
+      });
+
+      that.setState({
+        currentNoteIdx: 0
       });
     };
   },
@@ -82,6 +86,11 @@ var Wrap = React.createClass({
       currentNoteData: data
     });
   },
+  handleNoteIdx: function(data) {
+    this.setState({
+      currentNoteIdx: data
+    });
+  },
   render: function() {
     //console.log('render');
     return (
@@ -95,6 +104,7 @@ var Wrap = React.createClass({
         <NoteList
           lists={this.state.lists}
           currentNoteIdx={this.state.currentNoteIdx}
+          handleNoteIdx={this.handleNoteIdx}
           handleNoteData={this.handleNoteData}
         />
         <Content

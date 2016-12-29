@@ -26,20 +26,22 @@ var Article = React.createClass({
   componentDidUpdate: function() {
     console.log('변경확인', this.props.currentNoteData);
 
+    var $title = $('h1 input');
     var data = this.props.currentNoteData;
     if (!data) {
       return false;
     }
 
-    $('h1 input').val(data.title || '');
+    // 현재 작성중인 노트일때 업데이트 안함.
     if (editor.target) {
-      // 현재 작성중인 노트일때 업데이트 안함.
       if (data.id != noteId) {
-        console.log('본문 업데이트')
+        console.log('본문 갱신');
+        $title.val(data.title || '');
         editor.update(data.content);
       }
     } else {
       if (data) {
+        $title.val(data.title || '');
         editor.init(data.content);
       }
     }
@@ -100,7 +102,7 @@ var editor = {
       });
     }
 
-    
+
     // changeState('saving');
     // api.note.save(data, function() {
     //   changeState('saved');

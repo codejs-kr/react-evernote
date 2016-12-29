@@ -8,13 +8,11 @@
     - 리슨 firebase.database().ref('noteList/' + {userID}).on('value', function(data) {});
 
   - 정렬
-    - 하하
+    -
 
   - 필터
     - firebase.database().ref('noteList/admin').orderByChild('title').equalTo('수박').once('value')
       .then(function(data) { console.log(data.val()); });
-
-    - .limitToLast(3)
 
   TODO
   - 인증 후 userId 동적으로 받아오기
@@ -59,7 +57,8 @@ $.note = {
     console.log('updateTitle', arguments);
 
     var listData = {
-      title: data.title
+      title: data.title,
+      lastUpdateDate: $.util.getTime()
     };
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
   },
@@ -79,10 +78,8 @@ $.note = {
     detailData[data.id] = data.content;
 
     // 본문 업데이트
-    if (data.content) {
-      firebase.database().ref('noteDetail/' + 'admin').update(detailData);
-      firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
-    }
+    firebase.database().ref('noteDetail/' + 'admin').update(detailData);
+    firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
   },
   // 노트 불러오기
   readNote: function(id, callback) {
