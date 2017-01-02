@@ -1,22 +1,21 @@
+var tagit = null;
 var React = require('react');
 var Tags = React.createClass({
-  render: function() {
-    var tags = null;
+  componentDidMount: function() {
+    tagit = new TagIt();
+    tagit.init($('#tags'));
+  },
+  componentDidUpdate: function() {
     var tagsData = this.props.currentNoteData && this.props.currentNoteData.tags;
+    tagit.reset();
 
-    //console.log('tagsData', this.props.currentNoteData);
-    if (tagsData) {
-      tags = tagsData.map(function(data, i) {
-        return (
-          <span key={i}>{data}</span>
-        );
-      });
+    if (tagsData && tagsData.length) {
+      tagit.setData(tagsData);
     }
-
+  },
+  render: function() {
     return (
-      <div id="tags">
-        {tags}
-      </div>
+      <div id="tags"></div>
     );
   }
 });

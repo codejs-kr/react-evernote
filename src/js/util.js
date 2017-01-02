@@ -1,6 +1,9 @@
-/*
-  utils
-*/
+/*!
+ *
+ * utils
+ * @author dodortus (codejs.co.kr / dodortus@gmail.com)
+ *
+ */
 $.util = {
   getDate: function(timeStamp) {
     var dateObj = new Date(timeStamp);

@@ -1,5 +1,11 @@
+/*!
+ *
+ * firebase interfaces
+ * @author dodortus (codejs.co.kr / dodortus@gmail.com)
+ *
+ */
+
 /*
-  firebase interfaces
   - CRUD
     - 사용자 저장 firebase.database().ref('users/' + {userID}).set();
     - 저장, 갱신 firebase.database().ref('noteList/' + {userID}).update();
@@ -17,6 +23,34 @@
   TODO
   - 인증 후 userId 동적으로 받아오기
 */
+
+// initialize
+(function() {
+  var config = {
+    apiKey: "AIzaSyC78fW3A4NOEH9nD9_NzUW1n8Z0Vfx0O_c",
+    authDomain: "codejs-evernote.firebaseapp.com",
+    databaseURL: "https://codejs-evernote.firebaseio.com",
+    storageBucket: "codejs-evernote.appspot.com",
+    messagingSenderId: "1079024052510"
+  };
+
+  // init firebase
+  firebase.initializeApp(config);
+
+  // listen
+  firebase.database().ref('noteList/' + 'admin').orderByChild('lastUpdateDate').on('value', function(data) {
+    var result = [];
+
+    data.forEach(function(list) {
+      result.unshift(list.val());
+    });
+
+    console.log('변경 리스닝', result);
+    $.note.onUpdateList(result);
+  });
+})();
+
+// note api
 $.note = {
   userId: null,
   createUser: function(userId, name, email) {
@@ -115,14 +149,3 @@ $.note = {
   // 업데이트 리스닝
   onUpdateList: null
 };
-
-firebase.database().ref('noteList/' + 'admin').orderByChild('lastUpdateDate').on('value', function(data) {
-  var result = [];
-
-  data.forEach(function(list) {
-    result.unshift(list.val());
-  });
-
-  console.log('변경 리스닝', result);
-  $.note.onUpdateList(result);
-});
