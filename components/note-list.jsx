@@ -1,4 +1,5 @@
 var isFirstTrigger = false;
+var savedListCount = 0;
 var React = require('react');
 var NoteList = React.createClass({
   componentDidMount: function() {
@@ -20,8 +21,6 @@ var NoteList = React.createClass({
       // active
       that.props.handleNoteIdx($(this).parent().index());
     });
-
-    //$('.list-wrap:first').click();
   },
   componentDidUpdate: function() {
     console.log('NoteList componentDidUpdate', this.props.lists);
@@ -31,6 +30,13 @@ var NoteList = React.createClass({
       $('.list-wrap:first').click();
       isFirstTrigger = true;
     }
+
+    // 추가, 삭제시 처리
+    if (isFirstTrigger && savedListCount != $('.list-wrap').length) {
+      $('.list-wrap:first').click();
+    }
+
+    savedListCount = $('.list-wrap').length;
   },
   render: function() {
     var that = this;
@@ -47,7 +53,7 @@ var NoteList = React.createClass({
       var id = obj.id;
       var title = obj.title ? obj.title : "제목없음";
       var date = $.util.getDate(obj.lastUpdateDate);
-      var preview = obj.preview;
+      var preview = {__html: obj.preview};
       var obj = JSON.stringify(obj);
       count++;
 
@@ -57,7 +63,7 @@ var NoteList = React.createClass({
             <div>
               <strong>{title}</strong>
               <span>{date}</span>
-              <article>{preview}</article>
+              <article dangerouslySetInnerHTML={preview} />
             </div>
           </div>
         </li>

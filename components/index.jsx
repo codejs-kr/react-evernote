@@ -68,7 +68,7 @@ var Wrap = React.createClass({
     this.serverRequest.abort();
   },
   handleAsideClick: function(event) {
-    console.log('Wrap handleAsideClick', event);
+    console.log('Wrap handleAsideClick', event.target);
     var menuName = event.target.href.split('#')[1];
 
     this.setState({
