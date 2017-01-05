@@ -4,10 +4,11 @@
  * @author dodortus (codejs.co.kr / dodortus@gmail.com)
  *
  */
-function TagIt() {
+function TagIt(options) {
   var _that = {
     $input: null,
     $container: null,
+    data: [],
     init: function($parent) {
       console.log('init');
 
@@ -27,34 +28,67 @@ function TagIt() {
       var space = keyCode === 32;
       var value = $.trim(_that.$input.val());
 
-      if ((enter || space) && value) {
+      if (enter && value) {
         _that.append(value);
         _that.$input.val('');
       }
     },
-    append: function(value) {
-      console.log('append');
+    append: function(value, isInit) {
+      console.log('append', arguments);
 
-      $("<span class='tag'>" + value + "<button type='button'>X</button></span>").insertBefore(_that.$input);
+      // validation
+      // 값이 존재하면 기존 테그에 포커스
+      if (_that.checkExist(value)) {
+        console.log('이미 존재함');
+        return false;
+      }
+
+      $("<span class='tag'><span>" + value + "</span><button type='button'>X</button></span>")
+      .insertBefore(_that.$input);
+      _that.data.push(value);
+
+      // 초기 셋팅시엔 저장 하지 않음.
+      if (!isInit) {
+        _that.onChange();
+      }
     },
     remove: function() {
       console.log('remove');
 
-      $(this).parent().remove();
+      var $target = $(this).parent();
+      var index = $('.tag').index($target);
+      $target.remove();
+      _that.data.splice(index, 1);
+      _that.onChange();
     },
     reset: function() {
       $('.tag').remove();
+      _that.data = [];
     },
     setData: function(arr) {
       $.each(arr, function(i, item) {
-        _that.append(item);
+        _that.append(item, true); // 초기 셋팅
       });
+      _that.data = arr;
     },
     getData: function() {
-      // TODO save
+      return _that.data;
     },
-    checkExist: function() {
-
+    checkExist: function(value) {
+      var index = _that.data.indexOf(value);
+      if (index > -1) {
+        $('.tag:eq(' + index + ')').addClass('exist');
+        return true;
+      } else {
+        return false;
+      }
+    },
+    onChange: function() {
+      if (options.onChange) {
+        options.onChange();
+      } else {
+        console.log('no onChange listener');
+      }
     }
   }
 

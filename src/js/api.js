@@ -68,7 +68,7 @@ $.note = {
         "title": "",
         "createDate": currentDate,
         "lastUpdateDate": currentDate,
-        "tags": ["개발", "테그"],
+        "tags": [],
         "preview": "",
         "isFavorite": false
       },
@@ -86,6 +86,16 @@ $.note = {
     // Write the new post's data simultaneously in the posts list and the user's post list.
     firebase.database().ref('noteList/' + 'admin').update(listData);
     firebase.database().ref('noteDetail/' + 'admin').update(detailData);
+  },
+  updataTags: function(data) {
+
+    var listData = {
+      tags: data.tags,
+      lastUpdateDate: $.util.getTime()
+    };
+
+    console.log('updataTags', arguments, listData.lastUpdateDate);
+    firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
   },
   updateTitle: function(data) {
     console.log('updateTitle', arguments);
@@ -142,7 +152,7 @@ $.note = {
         result.unshift(list.val());
       });
 
-      console.log('데이터', result);
+      //console.log('데이터', result);
       callback && callback(result);
     });
   },

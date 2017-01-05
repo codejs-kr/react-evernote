@@ -69,14 +69,16 @@ var Wrap = React.createClass({
   },
   handleAsideClick: function(event) {
     console.log('Wrap handleAsideClick', event.target);
-    var menuName = event.target.href.split('#')[1];
+    var target = event.target;
+    var href = target.href ? target.href : target.parentElement.href;
+    var menuName = href.split('#')[1];
 
     this.setState({
       currentAction: menuName
     });
 
-    if (menuName.match('신규')) {
-      console.log('신규');
+    if (menuName.match('new-note')) {
+      //console.log('신규');
       $.note.createNote();
       return false;
     }

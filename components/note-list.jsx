@@ -29,6 +29,10 @@ var NoteList = React.createClass({
     if (!isFirstTrigger) {
       $('.list-wrap:first').click();
       isFirstTrigger = true;
+
+      setTimeout(function() {
+        $('#overlay').hide();
+      }, 1000);
     }
 
     // 추가, 삭제시 처리
@@ -70,7 +74,6 @@ var NoteList = React.createClass({
       );
     });
 
-    //console.log('확인 notes', notes);
     return (
       <section id="note-list">
         <strong id="head-title">노트</strong>
