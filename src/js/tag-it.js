@@ -25,8 +25,11 @@ function TagIt(options) {
 
       var keyCode = event.keyCode;
       var enter = keyCode === 13;
-      var space = keyCode === 32;
       var value = $.trim(_that.$input.val());
+
+      if ($('.tag').hasClass('exist')) {
+        $('.tag').removeClass('exist');
+      }
 
       if (enter && value) {
         _that.append(value);

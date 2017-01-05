@@ -39,7 +39,7 @@ aside .active a {
 
 footer { position: fixed; bottom: 10px; left: 6px; }
 footer a {
-  padding: 1px 4px; background: #bbb; border-radius: 4px;
+  padding: 1px 3px; background: #bbb; border-radius: 4px;
   text-decoration: none; color: #fff;
 }
 footer a:hover { color: #000; }
