@@ -31,7 +31,9 @@ var NoteList = React.createClass({
       isFirstTrigger = true;
 
       setTimeout(function() {
-        $('#overlay').hide();
+        $('#overlay').fadeOut(function() {
+          $(this).remove();
+        });
       }, 1000);
     }
 
