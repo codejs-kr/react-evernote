@@ -95,7 +95,7 @@ footer a:hover { color: #000; }
  */
 #content {
   float: left; display: flex; flex-direction: column;
-  width: calc(100% - 426px); border-left: solid 1px #000;
+  width: calc(100% - 426px); border-left: solid 1px #ccc;
 }
 #top-action { padding: 15px 20px 15px 35px; }
 #top-action:after { display: block; content: ""; clear: both; }
