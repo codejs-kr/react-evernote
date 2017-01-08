@@ -1,7 +1,7 @@
 {
   "author": "dodortus",
   "name": "React-Evernote",
-  "version": "0.0.1",
+  "version": "0.7.8",
   "description": "React for Evernote UI",
   "dependencies": {
     "react": "^15.2.1",

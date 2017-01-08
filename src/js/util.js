@@ -11,5 +11,11 @@ $.util = {
   },
   getTime: function() {
     return new Date().getTime();
+  },
+  startFullScreen: function() {
+
+  },
+  endFullScreen: function() {
+
   }
 };
