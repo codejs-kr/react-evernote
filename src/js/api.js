@@ -87,14 +87,20 @@ $.note = {
     firebase.database().ref('noteList/' + 'admin').update(listData);
     firebase.database().ref('noteDetail/' + 'admin').update(detailData);
   },
-  updataTags: function(data) {
+  updateFavorite: function(data) {
+    var listData = {
+      isFavorite: data.isFavorite,
+      lastUpdateDate: $.util.getTime()
+    };
 
+    firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
+  },
+  updataTags: function(data) {
     var listData = {
       tags: data.tags,
       lastUpdateDate: $.util.getTime()
     };
 
-    console.log('updataTags', arguments, listData.lastUpdateDate);
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
   },
   updateTitle: function(data) {
