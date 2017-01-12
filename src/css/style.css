@@ -24,15 +24,15 @@ aside {
 }
 aside img { margin-bottom: 30px; }
 aside ul { list-style: none; margin: 0; padding: 0; }
-aside li a {
+aside li button {
   display: inline-flex; align-items: center; justify-content: center;
   margin: 10px 0; width: 46px; height: 46px;
   background: #fff; border: solid 1px #ddd; color: #2dbe60; border-radius: 50%;
   text-decoration: none !important; transition: background 0.15s ease-out;
 }
 
-aside li a:hover { background: rgba(45, 190, 95, 0.9); color: #fff; }
-aside .active a {
+aside li button:hover { background: rgba(45, 190, 95, 0.9); color: #fff; }
+aside .active button {
   color: #fff; font-weight: bold;
   background: rgba(45, 190, 95, 0.9);
 }
@@ -102,7 +102,6 @@ footer a:hover { color: #000; }
 #left-action { float: left; }
 #right-action { float: right; }
 #right-action button {
-  position: relative;
   margin-right: 5px; width: 30px; height: 30px; vertical-align: top;
   background: #fff; border: solid 1px #ddd; border-radius: 3px; color: #2dbe60;
 }
@@ -112,13 +111,17 @@ footer a:hover { color: #000; }
 }
 #right-action button:last-child { margin: 0; }
 #btn-share { display: none; }
-#btn-info div {
-  display: none;
-  position: absolute; top: 40px; right: -70px;
-  width: 300px; height: 200px; background: #fff;
-  border: solid 1px #ddd; border-radius: 6px; box-shadow: 1px 2px 10px rgba(0,0,0,0.3);
+#note-info {
+  display: block; box-sizing: border-box;
+  position: fixed; top: 60px; right: 28px;
+  padding: 20px 10px 20px 35px; width: 300px;
+  background: #fff; border: solid 1px #ddd; border-radius: 4px;
+  box-shadow: 1px 2px 15px rgba(0,0,0,0.2); font-size: 1.2em;
 }
-#btn-info.active div { display: block; }
+#note-info li { line-height: 1.5; }
+#note-info li span:first-child { display: inline-block; width: 66px; }
+#note-info li span:last-child { margin-left: 5px; }
+#note-info .arrow { }
 
 #content main {
   flex: 1; padding: 0px 35px 30px; overflow-y: auto; height: 100%;

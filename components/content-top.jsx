@@ -55,7 +55,6 @@ var TopActions = React.createClass({
           </button>
           <button type="button" id="btn-info" title="노트정보">
             <i className="fa fa-info-circle fa-lg"></i>
-            <div></div>
           </button>
           <button type="button" id="btn-delete" title="삭제">
             <i className="fa fa-trash fa-lg"></i>
@@ -66,6 +65,17 @@ var TopActions = React.createClass({
           <button type="button" id="btn-fullscreen" title="전체화면">
             <i className="fa fa-arrows-alt fa-lg"></i>
           </button>
+
+          <div id="note-info">
+            <span class="arrow"></span>
+            <ul>
+              <li><span>제목</span>:<span>에버노트</span></li>
+              <li><span>테그</span>:<span>하나, 둘, 셋, 넷</span></li>
+              <li><span>만든날짜</span>:<span>2016-11-11</span></li>
+              <li><span>수정날짜</span>:<span>2017-11-11</span></li>
+              <li><span>작성자</span>:<span>codeJS</span></li>
+            </ul>
+          </div>
         </div>
       </section>
     );

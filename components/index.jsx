@@ -70,8 +70,7 @@ var Wrap = React.createClass({
   handleAsideClick: function(event) {
     console.log('Wrap handleAsideClick', event.target);
     var target = event.target;
-    var href = target.href ? target.href : target.parentElement.href;
-    var menuName = href.split('#')[1];
+    var menuName = target.id ? target.id : target.parentElement.id;
 
     this.setState({
       currentAction: menuName
