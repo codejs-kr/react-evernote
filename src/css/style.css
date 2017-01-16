@@ -157,6 +157,6 @@ footer a:hover { color: #000; }
 .tag.exist { border-color: #2dbe60; }
 
 
-::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: #ccc; }
 ::-webkit-scrollbar-track { background: #eee; }
