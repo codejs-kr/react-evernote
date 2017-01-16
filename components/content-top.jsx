@@ -1,7 +1,14 @@
 var React = require('react');
 var Tags = require('./content-top-tags.jsx');
 var TopActions = React.createClass({
+  getInitialState: function() {
+    return {
+      activedInfo: false,
+      activedFullScreen: false
+    };
+  },
   componentDidMount: function() {
+    var that = this;
     $('#right-action button').click(function() {
       var $this = $(this);
       var command = $this.attr('id').split('-')[1];
@@ -9,6 +16,19 @@ var TopActions = React.createClass({
       var noteId = $('#note-list .active div').attr('data-id');
 
       switch(command) {
+        case 'favorite':
+          $this.toggleClass('active');
+          $.note.updateFavorite({
+            id: noteId,
+            isFavorite: $this.hasClass('active')
+          });
+          break;
+        case 'info':
+          $this.toggleClass('active');
+          that.setState({
+            activedInfo: $this.hasClass('active')
+          });
+          break;
         case 'delete':
           if ($('#note-list li').length === 1) {
             alert('마지막 문서입니다. 새롭게 작성해 보세요.');
@@ -19,17 +39,9 @@ var TopActions = React.createClass({
             $.note.deleteNote(noteId);
           }
           break;
-        case 'favorite':
-          $this.toggleClass('active');
-          $.note.updateFavorite({
-            id: noteId,
-            isFavorite: $this.hasClass('active')
-          });
-          break;
-        case 'info':
-          $this.toggleClass('active');
-          break;
         case 'fullscreen':
+          $this.toggleClass('active');
+          $this.hasClass('active') ? $.util.startFullScreen() : $.util.endFullScreen();
           console.log('fullscreen');
           break;
       }
@@ -38,17 +50,26 @@ var TopActions = React.createClass({
   componentDidUpdate: function() {
     var data = this.props.currentNoteData;
     console.log('여기다', data);
+
+    if (data) {
+      $('#info-title').html(data.title);
+      $('#info-tags').html(data.tags ? data.tags.join(', ') : "없음");
+      $('#info-create-date').html($.util.getDate(data.createDate));
+      $('#info-update-date').html($.util.getDate(data.lastUpdateDate));
+      $('#info-owner').html('codeJS');
+    }
   },
   render: function() {
+    var data = this.props.currentNoteData;
     return (
       <section id="top-action">
         <div id="left-action">
-          <Tags currentNoteData={this.props.currentNoteData} />
+          <Tags currentNoteData={data} />
         </div>
         <div id="right-action">
           <button type="button"
             id="btn-favorite"
-            className={this.props.currentNoteData && this.props.currentNoteData.isFavorite ? 'active' : ''}
+            className={data && data.isFavorite ? 'active' : ''}
             title="즐겨찾기"
           >
             <i className="fa fa-star fa-lg"></i>
@@ -66,14 +87,14 @@ var TopActions = React.createClass({
             <i className="fa fa-arrows-alt fa-lg"></i>
           </button>
 
-          <div id="note-info">
-            <span class="arrow"></span>
+          <div id="note-info" className={this.state.activedInfo ? "active" : ""}>
+            <span className="arrow"></span>
             <ul>
-              <li><span>제목</span>:<span>에버노트</span></li>
-              <li><span>테그</span>:<span>하나, 둘, 셋, 넷</span></li>
-              <li><span>만든날짜</span>:<span>2016-11-11</span></li>
-              <li><span>수정날짜</span>:<span>2017-11-11</span></li>
-              <li><span>작성자</span>:<span>codeJS</span></li>
+              <li><span>제목</span>:<span id="info-title"></span></li>
+              <li><span>테그</span>:<span id="info-tags"></span></li>
+              <li><span>만든날짜</span>:<span id="info-create-date"></span></li>
+              <li><span>수정날짜</span>:<span id="info-update-date"></span></li>
+              <li><span>작성자</span>:<span id="info-owner"></span></li>
             </ul>
           </div>
         </div>

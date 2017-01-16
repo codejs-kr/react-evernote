@@ -105,23 +105,28 @@ footer a:hover { color: #000; }
   margin-right: 5px; width: 30px; height: 30px; vertical-align: top;
   background: #fff; border: solid 1px #ddd; border-radius: 3px; color: #2dbe60;
 }
-#right-action .active,
+#right-action button.active,
 #right-action button:hover {
   color: #fff; background: #2dbe60; border-color: #2dbe60;
 }
 #right-action button:last-child { margin: 0; }
 #btn-share { display: none; }
 #note-info {
-  display: block; box-sizing: border-box;
+  display: none; box-sizing: border-box;
   position: fixed; top: 60px; right: 28px;
-  padding: 20px 10px 20px 35px; width: 300px;
-  background: #fff; border: solid 1px #ddd; border-radius: 4px;
-  box-shadow: 1px 2px 15px rgba(0,0,0,0.2); font-size: 1.2em;
+  padding: 20px 10px 20px 40px; min-width: 340px; max-width: 400px;
+  background: #fff; border: solid 1px #a8a8a8; border-radius: 3px;
+  box-shadow: 1px 2px 15px rgba(0,0,0,0.2); font-size: 1.15em;
 }
-#note-info li { line-height: 1.5; }
-#note-info li span:first-child { display: inline-block; width: 66px; }
-#note-info li span:last-child { margin-left: 5px; }
-#note-info .arrow { }
+#note-info li { line-height: 1.8; }
+#note-info li span:first-child { display: inline-block; width: 70px; }
+#note-info li span:last-child { margin-left: 10px; }
+#note-info .arrow {
+  position: absolute; top: -10px; right: 73px;
+  display: inline-block; width: 20px; height: 10px;
+  background: url(/img/arrow.gif) no-repeat 0 -43px;
+}
+#note-info.active { display: block; }
 
 #content main {
   flex: 1; padding: 0px 35px 30px; overflow-y: auto; height: 100%;
@@ -150,3 +155,8 @@ footer a:hover { color: #000; }
 }
 .tag button:hover { font-weight: bold; }
 .tag.exist { border-color: #2dbe60; }
+
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: #ccc; }
+::-webkit-scrollbar-track { background: #eee; }
