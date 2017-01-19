@@ -66,11 +66,10 @@ footer a:hover { color: #000; }
 #note-list ul {
   list-style: none; height: calc(100% - (108px)); overflow: auto;
 }
-#note-list li { position: relative; padding: 0 20px 0 20px; cursor: pointer; }
-#note-list li.active div div { background: rgba(45, 190, 95, 0.9) !important; }
-#note-list li:hover div div { background: rgba(45, 190, 95, 0.2); }
-
-#note-list li.active div * { color: #fff !important; }
+#note-list ul > li { position: relative; padding: 0 20px 0 20px; cursor: pointer; }
+#note-list ul > li.active div div { background: rgba(45, 190, 95, 0.9) !important; }
+#note-list ul > li:hover div div { background: rgba(45, 190, 95, 0.2); }
+#note-list ul > li.active div * { color: #fff !important; }
 #note-list .list-wrap {
   padding: 15px 0; height: 95px;
   border-bottom: solid 1px #ececec;
@@ -89,6 +88,8 @@ footer a:hover { color: #000; }
   height: 56px; overflow: hidden;
   font-size: 0.9em; line-height: 1.5; color: #878787;
 }
+#note-list .list-wrap ol,
+#note-list .list-wrap ul { margin: 5px 0 0 20px; }
 
 /*
  * content

@@ -58,6 +58,9 @@ var Wrap = React.createClass({
       that.setState({
         lists: data
       });
+      
+      // 본문에 전달되는 노트정보 업데이트 (노트정보 popover)
+      $.extend(that.state.currentNoteData, data[0]);
 
       that.setState({
         currentNoteIdx: 0
