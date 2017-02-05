@@ -49,10 +49,10 @@ var TopActions = React.createClass({
   },
   componentDidUpdate: function() {
     var data = this.props.currentNoteData;
-    console.log('여기다', data);
+    console.log('확인 data', data);
 
     if (data) {
-      $('#info-title').html(data.title);
+      $('#info-title').html(data.title ? data.title : "없음");
       $('#info-tags').html(data.tags ? data.tags.join(', ') : "없음");
       $('#info-create-date').html($.util.getDate(data.createDate));
       $('#info-update-date').html($.util.getDate(data.lastUpdateDate));
@@ -94,7 +94,7 @@ var TopActions = React.createClass({
               <li><span>테그</span>:<span id="info-tags"></span></li>
               <li><span>만든날짜</span>:<span id="info-create-date"></span></li>
               <li><span>수정날짜</span>:<span id="info-update-date"></span></li>
-              <li><span>작성자</span>:<span id="info-owner"></span></li>
+              <li><span>생성자</span>:<span id="info-owner"></span></li>
             </ul>
           </div>
         </div>

@@ -13,9 +13,6 @@
     - 삭제 firebase.database().ref('noteList/' + {userID} + '/' + {noteID}).remove();
     - 리슨 firebase.database().ref('noteList/' + {userID}).on('value', function(data) {});
 
-  - 정렬
-    -
-
   - 필터
     - firebase.database().ref('noteList/admin').orderByChild('title').equalTo('수박').once('value')
       .then(function(data) { console.log(data.val()); });
