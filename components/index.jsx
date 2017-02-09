@@ -43,6 +43,9 @@ var Wrap = React.createClass({
     // console.log('this.refs.asideMenu', this.refs.asideMenu);
     // console.log('this.refs.asideMenu', ReactDOM.findDOMNode(this.refs.asideMenu));
     var that = this;
+    if(location.host.match(/codejs/gi)) {
+      $('body').addClass('codejs');
+    }
 
     // 최초 목록 로드
     $.note.readList(function(data) {
@@ -58,9 +61,13 @@ var Wrap = React.createClass({
       that.setState({
         lists: data
       });
-      
-      // 본문에 전달되는 노트정보 업데이트 (노트정보 popover)
-      $.extend(that.state.currentNoteData, data[0]);
+
+      /*
+        TODO
+        본문에 전달되는 노트정보 업데이트 (노트정보 popover)
+        개선 필요
+      */
+      //$.extend(that.state.currentNoteData, data[0]);
 
       that.setState({
         currentNoteIdx: 0

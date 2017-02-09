@@ -7,3 +7,6 @@ React로 레이아웃 구조를 Component 단위로 잡았으며,<br>
 * 신규 노트 작성 및 수정
 * 실시간 저장 및 동기화
 * 가볍고 직관적인 UI
+
+### Live Demo
+[바로가기](http://codejs.co.kr/portfolio/views/react-evernote)

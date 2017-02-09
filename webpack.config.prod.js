@@ -8,8 +8,6 @@ var BUILD_DIR  = path.resolve(__dirname, 'src');
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://localhost:7000',
-    'webpack/hot/dev-server',
     APP_DIR + '/index.jsx'    // file extension after index
   ],
   devtool: 'source-map',
@@ -18,7 +16,16 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false,
+      },
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.html'
     })
@@ -35,10 +42,5 @@ module.exports = {
         loaders: ['style', 'css']
       }
     ]
-  },
-  devServer: {
-    contentBase: './src',
-    hot: true
-  },
-  watch: true
+  }
 };
