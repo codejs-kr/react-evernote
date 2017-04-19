@@ -15,7 +15,7 @@ select { margin: 5px; min-width: 100px; }
   background: #fff url(/img/intro-logo.gif) no-repeat 50% 50%;
 }
 .codejs #overlay {
-  background-image: url(/portfolio/views/react-evernote/img/intro-logo.gif);
+  background-image: url(/development/views/react-evernote/img/intro-logo.gif);
 }
 #wrap { position: absolute; width: 100%; height: 100%; }
 #wrap > div { display: flex; height: 100%; }
@@ -130,7 +130,7 @@ footer a:hover { color: #000; }
   display: inline-block; width: 20px; height: 10px;
   background: url(/img/arrow.gif) no-repeat 0 -43px;
 }
-.codejs #note-info .arrow { 
+.codejs #note-info .arrow {
   background-image: url(/portfolio/views/react-evernote/img/arrow.gif);
 }
 #note-info.active { display: block; }
