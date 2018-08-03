@@ -146,7 +146,7 @@ footer a:hover { color: #000; }
 #content textarea { width: 100%; height: 900px; font-size: 14px; }
 
 /* editor */
-.cke_chrome { box-shadow: 0; }
+.cke_chrome { box-shadow: unset; }
 
 /* tag-it */
 #tags input { border: 0; padding: 5px; }

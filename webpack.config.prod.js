@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var APP_DIR = path.resolve(__dirname, 'components');
-var BUILD_DIR  = path.resolve(__dirname, 'src');
+var BUILD_DIR  = path.resolve(__dirname, 'build');
 
 module.exports = {
   entry: [
@@ -40,6 +40,10 @@ module.exports = {
       {
         test: /\.css$/,
         loaders: ['style', 'css']
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        loaders: 'file-loader'
       }
     ]
   }
