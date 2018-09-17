@@ -1,24 +1,40 @@
 {
   "author": "dodortus",
   "name": "React-Evernote",
-  "version": "0.7.8",
+  "version": "0.8.1",
   "description": "React for Evernote UI",
   "dependencies": {
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1",
-    "babel-loader": "*",
-    "babel-preset-es2015": "*",
-    "babel-preset-react": "*"
+    "@babel/runtime": "^7.0.0",
+    "jquery": "^3.3.1",
+    "moment": "^2.22.2",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1"
   },
   "devDependencies": {
-    "css-loader": "^0.23.1",
-    "html-webpack-plugin": "^2.22.0",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "@babel/core": "^7.0.1",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "css-loader": "^1.0.0",
+    "cssnano": "^4.1.0",
+    "file-loader": "^2.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.2",
+    "node-sass": "^4.9.3",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^5.3.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.19.0",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
   },
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.config.dev.js",
-    "build": "webpack --config webpack.config.prod.js"
+    "start": "webpack-dev-server --config ./config/webpack.config.js --mode development --open --port 3007",
+    "restart": "webpack-dev-server --config ./config/webpack.config.js --mode development --port 3007",
+    "build": "webpack --mode production --config ./config/webpack.config.js"
   }
 }

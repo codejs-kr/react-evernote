@@ -6,15 +6,14 @@
  */
 $.util = {
   getDate: function(timeStamp) {
-    var currentDate = moment(timeStamp).format('YYYY-MM-DD hh:mm:ss a');
-    return currentDate;
+    return moment(timeStamp).format('YYYY-MM-DD hh:mm:ss a');
   },
   getTime: function() {
     return new Date().getTime();
   },
   startFullScreen: function() {
     //console.info('startFullScreen', arguments);
-    var el = document.documentElement;
+    const el = document.documentElement;
     if (el.requestFullscreen) {
       el.requestFullscreen();
     } else if (el.mozRequestFullScreen) {
@@ -25,7 +24,7 @@ $.util = {
   },
   endFullScreen: function() {
     //console.info('endFullScreen');
-    var doc = document;
+    const doc = document;
 
     if (doc.exitFullscreen) {
       doc.exitFullscreen();

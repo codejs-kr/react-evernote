@@ -1,8 +1,8 @@
 /*!
  *
  * firebase interfaces
- * @author dodortus (codejs.co.kr / dodortus@gmail.com)
- *
+ * @author dodortus (dodortus@gmail.com)
+ * @homepage http://codejs.co.kr
  */
 
 /*
@@ -21,9 +21,10 @@
   - 인증 후 userId 동적으로 받아오기
 */
 
-// initialize
-(function() {
-  var config = {
+import Util from './util';
+
+const init = function() {
+  const config = {
     apiKey: "AIzaSyC78fW3A4NOEH9nD9_NzUW1n8Z0Vfx0O_c",
     authDomain: "codejs-evernote.firebaseapp.com",
     databaseURL: "https://codejs-evernote.firebaseio.com",
@@ -35,32 +36,32 @@
   firebase.initializeApp(config);
 
   // listen
-  firebase.database().ref('noteList/' + 'admin').orderByChild('lastUpdateDate').on('value', function(data) {
-    var result = [];
+  return firebase.database().ref('noteList/' + 'admin')
+    .orderByChild('lastUpdateDate').once('value').then(function(data) {
+      let result = [];
 
-    data.forEach(function(list) {
-      result.unshift(list.val());
-    });
+      data.forEach(function(list) {
+        result.unshift(list.val());
+      });
 
-    console.log('변경 리스닝', result);
-    $.note.onUpdateList(result);
-  });
-})();
+      return result;
+    })
+};
 
 // note api
-$.note = {
+const note = {
   userId: null,
   createUser: function(userId, name, email) {
     firebase.database().ref('users/' + 'admin').set({
       'name': 'codeJS',
       'email': 'dodortus@gmail.com',
-      'createDate': $.util.getTime()
+      'createDate': Util.getTime()
     });
   },
   // 노트 생성
   createNote: function() {
-    var currentDate = $.util.getTime();
-    var note = {
+    const currentDate = Util.getTime();
+    const note = {
       info: {
         "title": "",
         "createDate": currentDate,
@@ -73,9 +74,9 @@ $.note = {
     };
 
     // Get a key for a new Post.
-    var noteKey = firebase.database().ref('users/' + 'admin').child('noteList').push().key;
-    var listData = {};
-    var detailData = {};
+    const noteKey = firebase.database().ref('users/' + 'admin').child('noteList').push().key;
+    let listData = {};
+    let detailData = {};
     listData[noteKey] = note.info;
     listData[noteKey].id = noteKey;
     detailData[noteKey] = note.content;
@@ -85,17 +86,17 @@ $.note = {
     firebase.database().ref('noteDetail/' + 'admin').update(detailData);
   },
   updateFavorite: function(data) {
-    var listData = {
+    const listData = {
       isFavorite: data.isFavorite,
-      lastUpdateDate: $.util.getTime()
+      lastUpdateDate: Util.getTime()
     };
 
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
   },
   updataTags: function(data) {
-    var listData = {
+    const listData = {
       tags: data.tags,
-      lastUpdateDate: $.util.getTime()
+      lastUpdateDate: Util.getTime()
     };
 
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
@@ -103,9 +104,9 @@ $.note = {
   updateTitle: function(data) {
     console.log('updateTitle', arguments);
 
-    var listData = {
+    const listData = {
       title: data.title,
-      lastUpdateDate: $.util.getTime()
+      lastUpdateDate: Util.getTime()
     };
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
   },
@@ -118,10 +119,10 @@ $.note = {
     // data.title
     // data.content
 
-    var listData = {};
-    var detailData = {};
+    let listData = {};
+    let detailData = {};
     listData.preview = data.content.slice(0, 150);
-    listData.lastUpdateDate = $.util.getTime();
+    listData.lastUpdateDate = Util.getTime();
     detailData[data.id] = data.content;
 
     // 본문 업데이트
@@ -146,7 +147,7 @@ $.note = {
   // 노트 리스트 불러오기
   readList: function(callback) {
     // 한번 읽기
-    var result = [];
+    let result = [];
     firebase.database().ref('noteList/' + 'admin')
     .orderByChild('lastUpdateDate')
     .once('value').then(function(data) {
@@ -158,7 +159,10 @@ $.note = {
       //console.log('데이터', result);
       callback && callback(result);
     });
-  },
-  // 업데이트 리스닝
-  onUpdateList: null
+  }
 };
+
+export default {
+  init,
+  note
+}

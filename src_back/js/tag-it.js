@@ -93,7 +93,7 @@ function TagIt(options) {
         console.log('no onChange listener');
       }
     }
-  }
+  };
 
   $.extend(this, _that);
 }

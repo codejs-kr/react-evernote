@@ -1,0 +1,29 @@
+#content main {
+  flex: 1;
+  padding: 0 35px 30px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+#content h1 input {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 5px 0;
+  font-size: 2em;
+  font-weight: normal;
+  border: 0;
+  line-height: 1;
+}
+
+#content textarea {
+  width: 100%;
+  height: 900px;
+  font-size: 14px;
+}
+
+/* editor */
+.cke_chrome {
+  box-shadow: unset;
+}
+

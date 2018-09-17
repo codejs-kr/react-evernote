@@ -42,7 +42,7 @@
       result.unshift(list.val());
     });
 
-    console.log('변경 리스닝', result);
+    //console.log('변경 리스닝', result);
     $.note.onUpdateList(result);
   });
 })();

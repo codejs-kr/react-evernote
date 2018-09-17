@@ -1,0 +1,41 @@
+#aside-nav {
+  float: left;
+  padding: 12px 12px 24px 12px;
+  background: #f8f8f8;
+  text-align: center;
+  border: 1px solid #ececec;
+
+  img {
+    margin-bottom: 30px;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    width: 46px;
+    height: 46px;
+    background: #fff;
+    border: solid 1px #ddd;
+    color: #2dbe60;
+    border-radius: 50%;
+    text-decoration: none !important;
+    transition: background 0.15s ease-out;
+  }
+
+  li button:hover {
+    background: rgba(45, 190, 95, 0.9);
+    color: #fff;
+  }
+
+  .active button {
+    color: #fff;
+    font-weight: bold;
+    background: rgba(45, 190, 95, 0.9);
+  }
+}

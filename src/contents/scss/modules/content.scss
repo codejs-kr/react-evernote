@@ -1,0 +1,7 @@
+#content {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 426px);
+  border-left: solid 1px #ccc;
+}
