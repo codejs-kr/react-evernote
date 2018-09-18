@@ -6,7 +6,10 @@ import $ from 'jquery';
 class NoteListContainer extends Component {
   constructor(props) {
     super(props);
+
     this.count = 1;
+    this.isFirstTrigger = false;
+    this.savedListCount = 0;
   }
 
   getNoteList = () => {
@@ -15,7 +18,6 @@ class NoteListContainer extends Component {
     this.count = 1;
 
     lists.map((data, i) => {
-      //console.log('확인 data', data, i);
       let obj = data;
       this.count++;
 
@@ -29,9 +31,41 @@ class NoteListContainer extends Component {
       );
     });
 
-    console.log('확인 result', result);
-
     return result;
+  };
+
+  /**
+   * 목록 추가 삭제시 포커스 갱신
+   */
+  updateFocus = () => {
+    const { isFirstTrigger, savedListCount } = this;
+    const { handleNoteIdx } = this.props;
+
+    if (isFirstTrigger && savedListCount !== $('.list-wrap').length) {
+      $('.list-wrap:first').click();
+    }
+
+    this.savedListCount = $('.list-wrap').length;
+  };
+
+  /**
+   * 최초 로드시 첫번째 목록 선택
+   */
+  setFirstTrigger = () => {
+    const { isFirstTrigger } = this;
+    console.log('NoteList componentDidUpdate', this.props.lists);
+
+    // 기본 첫번째 리스트 선택
+    if (!isFirstTrigger) {
+      $('.list-wrap:first').click();
+      this.isFirstTrigger = true;
+
+      setTimeout(function() {
+        $('#overlay').fadeOut(function() {
+          $(this).remove();
+        });
+      }, 1000);
+    }
   };
 
   componentDidMount() {
@@ -52,29 +86,16 @@ class NoteListContainer extends Component {
       // active
       handleNoteIdx($(this).parent().index());
     });
+
+    this.setFirstTrigger();
   }
 
-  componentDidUpdate() {
-    console.log('NoteList componentDidUpdate', this.props.lists);
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.lists !== this.props.lists || nextProps.currentNoteIdx !== this.props.currentNoteIdx) {
+      return true;
+    }
 
-    //// 기본 첫번째 리스트 선택
-    //if (!isFirstTrigger) {
-    //  $('.list-wrap:first').click();
-    //  isFirstTrigger = true;
-    //
-    //  setTimeout(function() {
-    //    $('#overlay').fadeOut(function() {
-    //      $(this).remove();
-    //    });
-    //  }, 1000);
-    //}
-    //
-    //// 추가, 삭제시 처리
-    //if (isFirstTrigger && savedListCount != $('.list-wrap').length) {
-    //  $('.list-wrap:first').click();
-    //}
-    //
-    //savedListCount = $('.list-wrap').length;
+    return false;
   }
 
   render() {

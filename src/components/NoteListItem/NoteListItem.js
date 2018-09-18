@@ -17,7 +17,7 @@ class NoteListItem extends Component {
     let json = JSON.stringify(obj);
 
     return (
-      <li key={i} className={i === currentNoteIdx ? "active": ""}>
+      <li className={i === currentNoteIdx ? "active": ""}>
         <div className="list-wrap" data-id={id} data-obj={json}>
           <div>
             <strong>{title}</strong>

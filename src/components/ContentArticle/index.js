@@ -1,1 +1,1 @@
-export { default } from './ContentAticle';
+export { default } from './ContentArticle';

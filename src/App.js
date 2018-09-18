@@ -9,7 +9,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentAction: "목록",
+      currentPage: "목록",
       currentNoteIdx: 0,
       currentNoteData: null,
       lists: [],
@@ -20,13 +20,24 @@ class App extends Component {
   }
 
   init = async() => {
-    const lists = await api.init();
+    const lists = await api.init({
+      onUpdate: (lists) => {
+        this.handleNoteList(lists);
+      }
+    });
 
+    this.handleNoteList(lists);
     this.setState({
-      lists: lists,
       ready: true
     });
   };
+
+  handleNoteList(lists) {
+    this.setState({
+      lists: lists,
+      currentNoteIdx: 0
+    });
+  }
 
   handleNoteData = (data) => {
     this.setState({
@@ -35,6 +46,8 @@ class App extends Component {
   };
 
   handleNoteIdx = (index) => {
+    console.log('handleNoteIdx', index);
+
     this.setState({
       currentNoteIdx: index
     });
@@ -42,7 +55,7 @@ class App extends Component {
 
   render() {
     const { handleNoteData, handleNoteIdx } = this;
-    const { lists, ready, currentNoteIdx, currentNoteData } = this.state;
+    const { ready, lists, currentNoteIdx, currentNoteData } = this.state;
 
     if (!ready) {
       return false;

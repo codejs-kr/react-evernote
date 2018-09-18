@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import './ContentArticle.scss';
 import $ from 'jquery';
+import api from 'contents/js/api';
 
 let noteId = null;
 
-class ContentAticle extends Component {
+class ContentArticle extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    // var data = this.props.currentNoteData;
+    // console.log('여기다1', data);
+    //
+    // if (data) {
+    //   $('h1').html(data.title);
+    //   editor.init(data.content);
+    // }
+
+    $('h1 input').keyup(function(e) {
+      editor.onKeyup(e, true);
+    });
   }
 
   componentDidUpdate() {
@@ -91,13 +106,13 @@ const editor = {
     let data = null;
     if (isTitle) {
       data = this.getTitle();
-      $.note.updateTitle({
+      api.note.updateTitle({
         id: noteId,
         title: data
       });
     } else {
       data = this.getContent();
-      $.note.updateNote({
+      api.note.updateNote({
         id: noteId,
         content: data
       });
@@ -123,4 +138,4 @@ const editor = {
   }
 };
 
-export default ContentAticle;
+export default ContentArticle;

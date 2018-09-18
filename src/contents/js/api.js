@@ -23,31 +23,6 @@
 
 import Util from './util';
 
-const init = function() {
-  const config = {
-    apiKey: "AIzaSyC78fW3A4NOEH9nD9_NzUW1n8Z0Vfx0O_c",
-    authDomain: "codejs-evernote.firebaseapp.com",
-    databaseURL: "https://codejs-evernote.firebaseio.com",
-    storageBucket: "codejs-evernote.appspot.com",
-    messagingSenderId: "1079024052510"
-  };
-
-  // init firebase
-  firebase.initializeApp(config);
-
-  // listen
-  return firebase.database().ref('noteList/' + 'admin')
-    .orderByChild('lastUpdateDate').once('value').then(function(data) {
-      let result = [];
-
-      data.forEach(function(list) {
-        result.unshift(list.val());
-      });
-
-      return result;
-    })
-};
-
 // note api
 const note = {
   userId: null,
@@ -108,6 +83,7 @@ const note = {
       title: data.title,
       lastUpdateDate: Util.getTime()
     };
+
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
   },
   // 노트 본문 수정
@@ -148,18 +124,54 @@ const note = {
   readList: function(callback) {
     // 한번 읽기
     let result = [];
-    firebase.database().ref('noteList/' + 'admin')
-    .orderByChild('lastUpdateDate')
-    .once('value').then(function(data) {
 
-      data.forEach(function(list) {
-        result.unshift(list.val());
+    return firebase.database().ref('noteList/' + 'admin')
+      .orderByChild('lastUpdateDate')
+      .once('value').then(function(data) {
+
+        data.forEach(function(list) {
+          result.unshift(list.val());
+        });
+
+        //console.log('데이터', result);
+        if (callback) {
+          callback(result);
+        } else {
+          return result;
+        }
       });
+  },
+  onUpdate: null
+};
 
-      //console.log('데이터', result);
-      callback && callback(result);
-    });
+const init = function(options) {
+  const { onUpdate } = options;
+  const config = {
+    apiKey: "AIzaSyC78fW3A4NOEH9nD9_NzUW1n8Z0Vfx0O_c",
+    authDomain: "codejs-evernote.firebaseapp.com",
+    databaseURL: "https://codejs-evernote.firebaseio.com",
+    storageBucket: "codejs-evernote.appspot.com",
+    messagingSenderId: "1079024052510"
+  };
+
+  // init firebase
+  firebase.initializeApp(config);
+
+  // bind update listener
+  if (onUpdate) {
+    firebase.database().ref('noteList/' + 'admin')
+      .orderByChild('lastUpdateDate')
+      .on('value', function(data) {
+        let result = [];
+        data.forEach(function(list) {
+          result.unshift(list.val());
+        });
+
+        onUpdate(result);
+      });
   }
+
+  return note.readList();
 };
 
 export default {
