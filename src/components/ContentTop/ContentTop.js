@@ -2,29 +2,32 @@ import React, { Component } from 'react';
 import { Tags } from 'components';
 import './ContentTop.scss';
 
+
 class ContentTop extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      activedInfo: false,
-      activedFullScreen: false
-    };
   }
 
   render() {
-    const data = null;
+    const { currentNoteData } = this.props;
+
+    if (!currentNoteData) {
+      return false;
+    }
+
+    const { title, tags, isFavorite } = currentNoteData;
+    let { createDate, lastUpdateDate } = currentNoteData;
 
     return (
-      <section id="top-action">
+      <section id="top-action" ref={this.contentTopDom}>
         <div id="left-action">
-          <Tags currentNoteData={data} />
+          <Tags tags={tags} />
         </div>
         <div id="right-action">
           <button
             type="button"
             id="btn-favorite"
-            className={ data && data.isFavorite ? 'active' : '' }
+            className={ isFavorite ? 'active' : '' }
             title="즐겨찾기"
           >
             <i className="fa fa-star fa-lg" />
@@ -45,11 +48,11 @@ class ContentTop extends Component {
           <div id="note-info" className={this.state.activedInfo ? "active" : ""}>
             <span className="arrow" />
             <ul>
-              <li><span>제목</span>:<span id="info-title" /></li>
-              <li><span>테그</span>:<span id="info-tags" /></li>
-              <li><span>만든날짜</span>:<span id="info-create-date" /></li>
-              <li><span>수정날짜</span>:<span id="info-update-date" /></li>
-              <li><span>생성자</span>:<span id="info-owner" /></li>
+              <li><span>제목</span>:<span id="info-title" />{ title }</li>
+              <li><span>테그</span>:<span id="info-tags" />{ tags }</li>
+              <li><span>만든날짜</span>:<span id="info-create-date" />{ createDate }</li>
+              <li><span>수정날짜</span>:<span id="info-update-date" />{ lastUpdateDate }</li>
+              <li><span>생성자</span>:<span id="info-owner" />CodeJS</li>
             </ul>
           </div>
         </div>

@@ -32,12 +32,28 @@ class App extends Component {
     });
   };
 
-  handleNoteList(lists) {
+  handleAsideClick = (event) => {
+    console.log('handleAsideClick', event.target);
+    const target = event.target;
+    const menuName = target.id ? target.id : target.parentElement.id;
+
+    if (menuName.match('new-note')) {
+      //console.log('신규');
+      api.note.createNote();
+      return false;
+    } else {
+      this.setState({
+        currentPage: menuName
+      });
+    }
+  };
+
+  handleNoteList = (lists) => {
     this.setState({
       lists: lists,
       currentNoteIdx: 0
     });
-  }
+  };
 
   handleNoteData = (data) => {
     this.setState({
@@ -54,7 +70,7 @@ class App extends Component {
   };
 
   render() {
-    const { handleNoteData, handleNoteIdx } = this;
+    const { handleAsideClick, handleNoteData, handleNoteIdx } = this;
     const { ready, lists, currentNoteIdx, currentNoteData } = this.state;
 
     if (!ready) {
@@ -63,7 +79,9 @@ class App extends Component {
 
     return (
       <div>
-        <Aside />
+        <Aside
+          handleAsideClick={handleAsideClick}
+        />
         <NoteListContainer
           lists={lists}
           currentNoteIdx={currentNoteIdx}
