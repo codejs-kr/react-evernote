@@ -9,6 +9,7 @@ class ContentTopContainer extends Component {
     super(props);
 
     this.state = {
+      isFavorite: false,
       activedInfo: false,
       activedFullScreen: false
     };
@@ -16,11 +17,16 @@ class ContentTopContainer extends Component {
 
   handleFavorite = () => {
     const { currentNoteData } = this.props;
-    const { noteId, isFavorite } = currentNoteData;
+    const { isFavorite } = this.state;
+    const { id } = currentNoteData;
 
     api.note.updateFavorite({
-      id: noteId,
-      isFavorite: isFavorite
+      id: id,
+      isFavorite: !isFavorite
+    });
+
+    this.setState({
+      isFavorite: !isFavorite
     });
   };
 
@@ -31,29 +37,46 @@ class ContentTopContainer extends Component {
   };
 
   handleDelete = () => {
+    const { currentNoteData } = this.props;
+    const { id } = currentNoteData;
+
     if ($('#note-list li').length === 1) {
       alert('마지막 문서입니다. 새롭게 작성해 보세요.');
       return false;
     }
 
     if (confirm('정말 삭제 하시겠습니까?')) {
-      api.note.deleteNote(noteId);
+      api.note.deleteNote(id);
     }
   };
 
   handleFullScreen = () => {
+    const actived = this.state.activedFullScreen;
+
     this.setState({
-      activedFullScreen: !this.state.activedFullScreen
+      activedFullScreen: !actived
     });
 
-    this.state.activedFullScreen ? util.startFullScreen() : util.endFullScreen();
+    actived ? util.endFullScreen() : util.startFullScreen();
   };
 
   render() {
     const { currentNoteData } = this.props;
+    const { isFavorite } = this.state;
+    const { activedInfo, handleFavorite, handleInfo, handleDelete, handleFullScreen } = this;
+
+    console.log('확인2 currentNoteData', currentNoteData.isFavorite);
 
     return (
-      <ContentTop currentNoteData={currentNoteData} />
+      <ContentTop
+        currentNoteData={currentNoteData}
+        activedInfo={activedInfo}
+        isFavorite={isFavorite}
+        handleFavorite={handleFavorite}
+        handleInfo={handleInfo}
+        handleDelete={handleDelete}
+        handleFullScreen={handleFullScreen}
+      />
     );
   }
 }

@@ -5,25 +5,27 @@
  * @homepage http://codejs.co.kr
  */
 
-/*
-  - CRUD
-    - 사용자 저장 firebase.database().ref('users/' + {userID}).set();
-    - 저장, 갱신 firebase.database().ref('noteList/' + {userID}).update();
-    - 읽기 firebase.database().ref('noteList/' + {userID}).once('value').then(function(data) {});
-    - 삭제 firebase.database().ref('noteList/' + {userID} + '/' + {noteID}).remove();
-    - 리슨 firebase.database().ref('noteList/' + {userID}).on('value', function(data) {});
-
-  - 필터
-    - firebase.database().ref('noteList/admin').orderByChild('title').equalTo('수박').once('value')
-      .then(function(data) { console.log(data.val()); });
-
-  TODO
-  - 인증 후 userId 동적으로 받아오기
-*/
-
 import Util from './util';
 
-// note api
+/*
+ - CRUD
+ - 사용자 저장 firebase.database().ref('users/' + {userID}).set();
+ - 저장, 갱신 firebase.database().ref('noteList/' + {userID}).update();
+ - 읽기 firebase.database().ref('noteList/' + {userID}).once('value').then(function(data) {});
+ - 삭제 firebase.database().ref('noteList/' + {userID} + '/' + {noteID}).remove();
+ - 리슨 firebase.database().ref('noteList/' + {userID}).on('value', function(data) {});
+
+ - 필터
+ - firebase.database().ref('noteList/admin').orderByChild('title').equalTo('수박').once('value')
+ .then(function(data) { console.log(data.val()); });
+
+ TODO
+ - 인증 후 userId 동적으로 받아오기
+ */
+
+/**
+ * note api
+ */
 const note = {
   userId: null,
   createUser: function(userId, name, email) {
@@ -144,6 +146,11 @@ const note = {
   onUpdate: null
 };
 
+/**
+ * Firebase 초기화
+ * @param options
+ * @returns {*}
+ */
 const init = function(options) {
   const { onUpdate } = options;
   const config = {
