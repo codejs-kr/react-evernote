@@ -7,12 +7,27 @@ import util from 'contents/js/util';
 class ContentTopContainer extends Component {
   constructor(props) {
     super(props);
+    const { currentNoteData } = this.props;
 
     this.state = {
+      id: currentNoteData.id,
       isFavorite: false,
       activedInfo: false,
       activedFullScreen: false
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps', nextProps, prevState);
+
+    if (prevState.id !== nextProps.currentNoteData.id) {
+      return {
+        id: nextProps.currentNoteData.id,
+        isFavorite: nextProps.currentNoteData.isFavorite,
+      }
+    }
+
+    return null; // null 을 리턴하면 따로 업데이트 할 것은 없다는 의미
   }
 
   handleFavorite = () => {
@@ -64,8 +79,6 @@ class ContentTopContainer extends Component {
     const { currentNoteData } = this.props;
     const { isFavorite } = this.state;
     const { activedInfo, handleFavorite, handleInfo, handleDelete, handleFullScreen } = this;
-
-    console.log('확인2 currentNoteData', currentNoteData.isFavorite);
 
     return (
       <ContentTop

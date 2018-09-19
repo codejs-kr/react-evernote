@@ -88,9 +88,11 @@ class App extends Component {
           handleNoteData={handleNoteData}
           handleNoteIdx={handleNoteIdx}
         />
-        <ContentContainer
-          currentNoteData={currentNoteData}
-        />
+        <section id="content">
+          <ContentContainer
+            currentNoteData={currentNoteData}
+          />
+        </section>
       </div>
     );
   }

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { ContentArticle } from 'components';
 import { ContentTopContainer } from 'containers';
-
 
 class ContentContainer extends Component {
   constructor(props) {
@@ -11,11 +10,15 @@ class ContentContainer extends Component {
   render() {
     const { currentNoteData } = this.props;
 
+    if (!currentNoteData) {
+      return false
+    }
+
     return (
-      <section id="content">
+      <Fragment>
         <ContentTopContainer currentNoteData={currentNoteData} />
         <ContentArticle currentNoteData={currentNoteData} />
-      </section>
+      </Fragment>
     );
   }
 }

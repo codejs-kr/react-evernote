@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Tags } from 'components';
 import './ContentTop.scss';
 
-
 class ContentTop extends Component {
   constructor(props) {
     super(props);
@@ -18,10 +17,6 @@ class ContentTop extends Component {
       handleDelete,
       handleFullScreen
     } = this.props;
-
-    if (!currentNoteData) {
-      return false;
-    }
 
     const { title, tags } = currentNoteData;
     let { createDate, lastUpdateDate } = currentNoteData;
