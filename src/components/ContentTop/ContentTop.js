@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tags } from 'components';
+import { Tags, ContentInfo } from 'components';
 import './ContentTop.scss';
 
 class ContentTop extends Component {
@@ -10,7 +10,7 @@ class ContentTop extends Component {
   render() {
     const {
       currentNoteData,
-      activedInfo,
+      isActiveInfo,
       isFavorite,
       handleFavorite,
       handleInfo,
@@ -18,13 +18,12 @@ class ContentTop extends Component {
       handleFullScreen
     } = this.props;
 
-    const { title, tags } = currentNoteData;
-    let { createDate, lastUpdateDate } = currentNoteData;
+    const { tags, id } = currentNoteData;
 
     return (
       <section id="top-action">
         <div id="left-action">
-          <Tags tags={tags} />
+          <Tags tags={tags} id={id} />
         </div>
         <div id="right-action">
           <button
@@ -49,16 +48,10 @@ class ContentTop extends Component {
             <i className="fa fa-arrows-alt fa-lg" />
           </button>
 
-          <div id="note-info" className={activedInfo ? "active" : ""}>
-            <span className="arrow" />
-            <ul>
-              <li><span>제목</span>:<span id="info-title" />{ title }</li>
-              <li><span>테그</span>:<span id="info-tags" />{ tags }</li>
-              <li><span>만든날짜</span>:<span id="info-create-date" />{ createDate }</li>
-              <li><span>수정날짜</span>:<span id="info-update-date" />{ lastUpdateDate }</li>
-              <li><span>생성자</span>:<span id="info-owner" />CodeJS</li>
-            </ul>
-          </div>
+          <ContentInfo
+            isActiveInfo={isActiveInfo}
+            currentNoteData={currentNoteData}
+          />
         </div>
       </section>
     );

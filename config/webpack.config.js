@@ -41,6 +41,8 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              sourceMap: true,
+              root: srcPath, // 루트 지정하여 css 에서 절대 경로로 이미지를 호출하도록 설정.
               importLoaders: 1
             }
           },
@@ -58,9 +60,7 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
-            loader: 'file-loader',
-            options: {
-            }
+            loader: 'file-loader'
           }
         ]
       }

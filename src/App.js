@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Aside } from 'components';
-import { NoteListContainer, ContentContainer } from 'containers';
+import { Aside, IntroLoader } from 'components';
+import { NoteListContainer, ContentTopContainer, ContentArticleContainer } from 'containers';
 import api from 'contents/js/api';
 import 'contents/scss/main.scss';
 
@@ -74,7 +74,9 @@ class App extends Component {
     const { ready, lists, currentNoteIdx, currentNoteData } = this.state;
 
     if (!ready) {
-      return false;
+      return (
+        <IntroLoader />
+      );
     }
 
     return (
@@ -89,9 +91,19 @@ class App extends Component {
           handleNoteIdx={handleNoteIdx}
         />
         <section id="content">
-          <ContentContainer
-            currentNoteData={currentNoteData}
-          />
+          {
+            currentNoteData ? (
+              <Fragment>
+                <ContentTopContainer
+                  lists={lists}
+                  currentNoteData={currentNoteData}
+                />
+                <ContentArticleContainer
+                  currentNoteData={currentNoteData}
+                />
+              </Fragment>
+            ) : null
+          }
         </section>
       </div>
     );

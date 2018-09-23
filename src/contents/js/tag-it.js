@@ -4,7 +4,7 @@
  * @author dodortus (codejs.co.kr / dodortus@gmail.com)
  *
  */
-function TagIt(options) {
+function TagIt($, options) {
   var _that = {
     $input: null,
     $container: null,
@@ -93,7 +93,7 @@ function TagIt(options) {
         console.log('no onChange listener');
       }
     }
-  }
+  };
 
   $.extend(this, _that);
 }

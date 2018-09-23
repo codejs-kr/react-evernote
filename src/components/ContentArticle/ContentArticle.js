@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './ContentArticle.scss';
 import $ from 'jquery';
-import api from 'contents/js/api';
+import editor from 'contents/js/editor';
 
 let noteId = null;
 
@@ -10,50 +10,51 @@ class ContentArticle extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    // var data = this.props.currentNoteData;
-    // console.log('여기다1', data);
-    //
-    // if (data) {
-    //   $('h1').html(data.title);
-    //   editor.init(data.content);
-    // }
-
-    $('h1 input').keyup(function(e) {
-      editor.onKeyup(e, true);
-    });
-  }
-
-  componentDidUpdate() {
-    console.log('변경확인', this.props.currentNoteData);
-
-    const $title = $('h1 input');
+  setEditor = () => {
     const data = this.props.currentNoteData;
+
     if (!data) {
       return false;
     }
 
-    // 현재 작성중인 노트일때 업데이트 안함.
+    console.log('확인 data', data);
+
+    const $title = $('h1 input');
+
+    // 다른 노트를 선택한 경우 갱신
     if (editor.target) {
       if (data.id !== noteId) {
         console.log('본문 갱신');
         $title.val(data.title || '');
         editor.update(data.content);
       }
+
+    // 초기 설정
     } else {
       if (data) {
+        console.log('본문 초기 설정');
         $title.val(data.title || '');
-        editor.init(data.content);
+        editor.init(data.id, data.content);
       }
     }
 
     // 현재 노트 ID저장
     noteId = data.id;
+  };
+
+  componentDidMount() {
+    $('h1 input').keyup(function(e) {
+      editor.onKeyup(e, true);
+    });
+
+    this.setEditor();
+  }
+
+  componentDidUpdate() {
+    this.setEditor();
   }
 
   render() {
-    const noteId = null;
-
     return (
       <main>
         <h1>
@@ -66,76 +67,5 @@ class ContentArticle extends Component {
     );
   }
 }
-
-const editor = {
-  target: null,
-  timeID: null,
-  init: function(data) {
-    CKEDITOR.replace('editor');
-    const editorObj = CKEDITOR.instances.editor;
-    const config = CKEDITOR.config;
-    editorObj.setData(data);
-    config.height = '80em';
-    this.target = editorObj;
-    //console.log('editorObj', editorObj, 'config', config);
-
-    editorObj.on('contentDom', function() {
-      const editable = editorObj.editable();
-
-      /*
-       * 목록 가져오기로 setData() 이후 이벤트가 풀리는 증상 해결.
-       * ref: http://stackoverflow.com/questions/16054070/ckeditor-setdata-prevents-attaching-of-events-with-on-function
-       */
-      editable.attachListener(editorObj.document, 'keyup', function(event) {
-        editor.onKeyup(event.data.$);
-      });
-    });
-  },
-  update: function(data) {
-    this.target.setData(data);
-  },
-  getTitle: function() {
-    return $('h1 input').val();
-  },
-  getContent: function() {
-    return this.target.getData();
-  },
-  save: function(isTitle) {
-    console.log('save', arguments);
-
-    let data = null;
-    if (isTitle) {
-      data = this.getTitle();
-      api.note.updateTitle({
-        id: noteId,
-        title: data
-      });
-    } else {
-      data = this.getContent();
-      api.note.updateNote({
-        id: noteId,
-        content: data
-      });
-    }
-  },
-  /**
-   * saveRequest
-   * 변경사항이 생길때 1초 초과시 save() 실행
-   */
-  saveRequest: function(isTitle) {
-    const that = this;
-    if (this.timeID) {
-      clearTimeout(this.timeID);
-    }
-
-    this.timeID = setTimeout(function() {
-      that.save(isTitle);
-    }, 500);
-  },
-  onKeyup: function(event, isTitle) {
-    console.log('onKeyEvent', arguments);
-    this.saveRequest(isTitle);
-  }
-};
 
 export default ContentArticle;

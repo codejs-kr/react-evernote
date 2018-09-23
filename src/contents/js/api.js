@@ -1,26 +1,23 @@
 /*!
  *
- * firebase interfaces
+ * firebase interface
  * @author dodortus (dodortus@gmail.com)
  * @homepage http://codejs.co.kr
  */
 
-import Util from './util';
+import util from './util';
 
 /*
- - CRUD
+ CRUD
  - 사용자 저장 firebase.database().ref('users/' + {userID}).set();
  - 저장, 갱신 firebase.database().ref('noteList/' + {userID}).update();
  - 읽기 firebase.database().ref('noteList/' + {userID}).once('value').then(function(data) {});
  - 삭제 firebase.database().ref('noteList/' + {userID} + '/' + {noteID}).remove();
  - 리슨 firebase.database().ref('noteList/' + {userID}).on('value', function(data) {});
 
- - 필터
+ 필터
  - firebase.database().ref('noteList/admin').orderByChild('title').equalTo('수박').once('value')
- .then(function(data) { console.log(data.val()); });
-
- TODO
- - 인증 후 userId 동적으로 받아오기
+    .then(function(data) { console.log(data.val()); });
  */
 
 /**
@@ -32,12 +29,12 @@ const note = {
     firebase.database().ref('users/' + 'admin').set({
       'name': 'codeJS',
       'email': 'dodortus@gmail.com',
-      'createDate': Util.getTime()
+      'createDate': util.getTime()
     });
   },
   // 노트 생성
   createNote: function() {
-    const currentDate = Util.getTime();
+    const currentDate = util.getTime();
     const note = {
       info: {
         "title": "",
@@ -65,7 +62,7 @@ const note = {
   updateFavorite: function(data) {
     const listData = {
       isFavorite: data.isFavorite,
-      lastUpdateDate: Util.getTime()
+      lastUpdateDate: util.getTime()
     };
 
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
@@ -73,7 +70,7 @@ const note = {
   updataTags: function(data) {
     const listData = {
       tags: data.tags,
-      lastUpdateDate: Util.getTime()
+      lastUpdateDate: util.getTime()
     };
 
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
@@ -83,7 +80,7 @@ const note = {
 
     const listData = {
       title: data.title,
-      lastUpdateDate: Util.getTime()
+      lastUpdateDate: util.getTime()
     };
 
     firebase.database().ref('noteList/' + 'admin/' + data.id).update(listData);
@@ -100,7 +97,7 @@ const note = {
     let listData = {};
     let detailData = {};
     listData.preview = data.content.slice(0, 150);
-    listData.lastUpdateDate = Util.getTime();
+    listData.lastUpdateDate = util.getTime();
     detailData[data.id] = data.content;
 
     // 본문 업데이트

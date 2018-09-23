@@ -4,7 +4,7 @@
  * @author dodortus (codejs.co.kr / dodortus@gmail.com)
  *
  */
-function TagIt(options) {
+function TagIt($, options) {
   var _that = {
     $input: null,
     $container: null,

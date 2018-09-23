@@ -12,8 +12,8 @@ class ContentTopContainer extends Component {
     this.state = {
       id: currentNoteData.id,
       isFavorite: false,
-      activedInfo: false,
-      activedFullScreen: false
+      isActiveInfo: false,
+      isActiveFullScreen: false
     };
   }
 
@@ -24,6 +24,7 @@ class ContentTopContainer extends Component {
       return {
         id: nextProps.currentNoteData.id,
         isFavorite: nextProps.currentNoteData.isFavorite,
+        isActiveInfo: false
       }
     }
 
@@ -47,15 +48,15 @@ class ContentTopContainer extends Component {
 
   handleInfo = () => {
     this.setState({
-      activedInfo: !this.state.activedInfo
+      isActiveInfo: !this.state.isActiveInfo
     });
   };
 
   handleDelete = () => {
-    const { currentNoteData } = this.props;
+    const { currentNoteData, lists } = this.props;
     const { id } = currentNoteData;
 
-    if ($('#note-list li').length === 1) {
+    if (lists.length === 1) {
       alert('마지막 문서입니다. 새롭게 작성해 보세요.');
       return false;
     }
@@ -66,25 +67,25 @@ class ContentTopContainer extends Component {
   };
 
   handleFullScreen = () => {
-    const actived = this.state.activedFullScreen;
+    const isActive = this.state.isActiveFullScreen;
 
     this.setState({
-      activedFullScreen: !actived
+      isActiveFullScreen: !isActive
     });
 
-    actived ? util.endFullScreen() : util.startFullScreen();
+    isActive ? util.endFullScreen() : util.startFullScreen();
   };
 
   render() {
     const { currentNoteData } = this.props;
-    const { isFavorite } = this.state;
-    const { activedInfo, handleFavorite, handleInfo, handleDelete, handleFullScreen } = this;
+    const { isFavorite, isActiveInfo } = this.state;
+    const { handleFavorite, handleInfo, handleDelete, handleFullScreen } = this;
 
     return (
       <ContentTop
         currentNoteData={currentNoteData}
-        activedInfo={activedInfo}
         isFavorite={isFavorite}
+        isActiveInfo={isActiveInfo}
         handleFavorite={handleFavorite}
         handleInfo={handleInfo}
         handleDelete={handleDelete}

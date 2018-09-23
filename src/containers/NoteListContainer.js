@@ -7,7 +7,6 @@ class NoteListContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.count = 1;
     this.isFirstTrigger = false;
     this.savedListCount = 0;
   }
@@ -15,18 +14,14 @@ class NoteListContainer extends Component {
   getNoteList = () => {
     const { lists, currentNoteIdx } = this.props;
     let result = [];
-    this.count = 1;
 
     lists.map((data, i) => {
-      let obj = data;
-      this.count++;
-
       result.push(
         <NoteListItem
           key={i}
           i={i}
           currentNoteIdx={currentNoteIdx}
-          obj={obj}
+          obj={data}
         />
       );
     });
@@ -52,55 +47,77 @@ class NoteListContainer extends Component {
    * 최초 로드시 첫번째 목록 선택
    */
   setFirstTrigger = () => {
-    const { isFirstTrigger } = this;
-    console.log('NoteList componentDidUpdate', this.props.lists);
+    const { lists } = this.props;
+    const { handleReadNote } = this;
+    const data = lists[0];
+    console.log('NoteList componentDidUpdate', lists);
 
     // 기본 첫번째 리스트 선택
-    if (!isFirstTrigger) {
-      $('.list-wrap:first').click();
+    if (!this.isFirstTrigger) {
+      handleReadNote(data.id, data);
       this.isFirstTrigger = true;
-
-      setTimeout(function() {
-        $('#overlay').fadeOut(function() {
-          $(this).remove();
-        });
-      }, 1000);
     }
   };
 
+  /**
+   * 노트 내용 호출
+   * @param id
+   * @param targetNoteData
+   */
+  handleReadNote = (id, targetNoteData) => {
+    console.log('handleReadNote', id);
+    const { handleNoteData } = this.props;
+
+    // read
+    api.note.readNote(id, function(data) {
+      console.log('ID', id, data);
+      targetNoteData.content = data;
+      targetNoteData.id = id;
+      handleNoteData(targetNoteData);
+    });
+  };
+
   componentDidMount() {
-    const { handleNoteData, handleNoteIdx } = this.props;
+    const { handleNoteIdx } = this.props;
+    const { handleReadNote, setFirstTrigger } = this;
 
     $('#root').on('click', '.list-wrap', function() {
       const targetNoteData = JSON.parse($(this).attr('data-obj')); // data()로 할경우 이전 정보 갱신 안되는 증상 발생
       const noteId = $(this).attr('data-id');
 
-      // read
-      api.note.readNote(noteId, function(data) {
-        console.log('ID', noteId, data);
-        targetNoteData.content = data;
-        targetNoteData.id = noteId;
-        handleNoteData(targetNoteData);
-      });
+      handleReadNote(noteId, targetNoteData);
 
       // active
       handleNoteIdx($(this).parent().index());
     });
 
-    this.setFirstTrigger();
+    setFirstTrigger();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.lists !== this.props.lists || nextProps.currentNoteIdx !== this.props.currentNoteIdx) {
-      return true;
-    }
+    const { lists, currentNoteIdx } = this.props;
 
-    return false;
+    return (
+      nextProps.lists !== lists ||
+      nextProps.currentNoteIdx !== currentNoteIdx
+    );
+  }
+
+  componentDidUpdate(prevProps) {
+    const { handleReadNote } = this;
+    const { lists } = this.props;
+
+    // 목록의 갯수가 바뀔때 첫번째 노트의 내용 보여 줍니다. (목록 추가 / 삭제)
+    if (prevProps.lists.length !== lists.length) {
+      const data = lists[0];
+      const id = data.id;
+      handleReadNote(id, data);
+    }
   }
 
   render() {
+    const { lists } = this.props;
     const { getNoteList } = this;
-    const notes = getNoteList();
 
     return (
       <Fragment>
@@ -113,11 +130,11 @@ class NoteListContainer extends Component {
           </div>
 
           <p id="head-info">
-            { this.count }개의 노트
+            { lists.length }개의 노트
           </p>
 
           <ul>
-            { notes }
+            { getNoteList() }
           </ul>
         </section>
       </Fragment>
