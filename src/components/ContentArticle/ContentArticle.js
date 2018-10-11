@@ -3,55 +3,56 @@ import './ContentArticle.scss';
 import $ from 'jquery';
 import editor from 'contents/js/editor';
 
-let noteId = null;
-
 class ContentArticle extends Component {
   constructor(props) {
     super(props);
+
+    this.noteId = null;
   }
 
   setEditor = () => {
     const data = this.props.currentNoteData;
-
-    if (!data) {
-      return false;
-    }
-
-    console.log('확인 data', data);
-
     const $title = $('h1 input');
+    console.log('본문 초기 설정', data);
 
-    // 다른 노트를 선택한 경우 갱신
-    if (editor.target) {
-      if (data.id !== noteId) {
-        console.log('본문 갱신');
-        $title.val(data.title || '');
-        editor.update(data.content);
-      }
+    $title.val(data.title || '');
+    editor.init(data.id, data.content);
 
-    // 초기 설정
-    } else {
-      if (data) {
-        console.log('본문 초기 설정');
-        $title.val(data.title || '');
-        editor.init(data.id, data.content);
-      }
-    }
-
-    // 현재 노트 ID저장
-    noteId = data.id;
-  };
-
-  componentDidMount() {
     $('h1 input').keyup(function(e) {
       editor.onKeyup(e, true);
     });
+  };
+
+  updateEditor = () => {
+    const data = this.props.currentNoteData;
+    console.log('본문 갱신', data);
+
+    // 다른 노트를 선택한 경우 갱신
+    if (editor.target) {
+
+      const $title = $('h1 input');
+      $title.val(data.title || '');
+      editor.update(data.id, data.content);
+    }
+  };
+
+  componentDidMount() {
+    console.log('노트 componentDidMount');
+    const data = this.props.currentNoteData;
 
     this.setEditor();
+    this.noteId = data.id;
   }
 
   componentDidUpdate() {
-    this.setEditor();
+    const data = this.props.currentNoteData;
+    console.log('노트 componentDidUpdate', this.noteId, data.id);
+
+    if (this.noteId !== data.id) {
+      this.updateEditor();
+    }
+
+    this.noteId = data.id;
   }
 
   render() {

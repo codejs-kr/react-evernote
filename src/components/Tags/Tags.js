@@ -1,35 +1,37 @@
 import React, { Component } from 'react';
-import api from 'contents/js/api';
 import './Tags.scss';
+import api from 'contents/js/api';
 import $ from 'jquery';
+import tagit from 'contents/js/tag-it';
 
-let tagit = null;
 class Tags extends Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    const { id } = this.props;
-
-    tagit = new TagIt($, {
-      // 테그 변경이 감지 되면 저장.
-      onChange: function() {
-        console.log('테그 변경');
-
-        api.note.updataTags({
-          id: id,
-          tags: tagit.getData()
-        });
-      }
-    });
+    const { id, tags } = this.props;
+    console.log('componentDidMount', id, tags);
 
     tagit.init($('#tags'));
+
+    if (tags && tags.length) {
+      tagit.setData(tags);
+    }
+
+    tagit.onChange = () => {
+      console.log('테그 변경');
+
+      api.note.updataTags({
+        id: id,
+        tags: tagit.getData()
+      });
+    };
   }
 
   componentDidUpdate(prevProps) {
     const { id, tags } = this.props;
-    //console.log('확인', data);
+    console.log('componentDidUpdate', id, tags);
 
     // 현재 작성중인 노트일때 업데이트 안함.
     if (prevProps.id !== id) {
@@ -43,9 +45,7 @@ class Tags extends Component {
 
   render() {
     return (
-      <div id="tags">
-
-      </div>
+      <div id="tags" />
     );
   }
 }

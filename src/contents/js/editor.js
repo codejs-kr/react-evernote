@@ -14,7 +14,7 @@ export default {
     const config = CKEDITOR.config;
     editorObj.setData(data);
     config.height = '80em';
-    this.target = editorObj;
+    that.target = editorObj;
     //console.log('editorObj', editorObj, 'config', config);
 
     editorObj.on('contentDom', function() {
@@ -29,7 +29,10 @@ export default {
       });
     });
   },
-  update: function(data) {
+  update: function(id, data) {
+    console.log('editor.update', arguments);
+
+    this.noteID = id;
     this.target.setData(data);
   },
   getTitle: function() {

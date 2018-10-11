@@ -23,7 +23,10 @@ class ContentTop extends Component {
     return (
       <section id="top-action">
         <div id="left-action">
-          <Tags tags={tags} id={id} />
+          <Tags
+            id={id}
+            tags={tags}
+          />
         </div>
         <div id="right-action">
           <button

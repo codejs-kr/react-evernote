@@ -1,10 +1,3 @@
-html,
-body,
-body * { margin: 0; padding: 0; }
-body { font-size: 14px; }
-button { cursor: pointer; }
-select { margin: 5px; min-width: 100px; }
-
 .red { background: red; }
 .green { background: green; }
 .yellow { background: yellow; }
@@ -27,19 +20,6 @@ select { margin: 5px; min-width: 100px; }
   display: block;
   content: "";
   clear: both;
-}
-
-#overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff url(/img/intro-logo.gif) no-repeat 50% 50%;
-}
-
-.codejs #overlay {
-  background-image: url(/development/views/react-evernote/img/intro-logo.gif);
 }
 
 ::-webkit-scrollbar { width: 8px; }

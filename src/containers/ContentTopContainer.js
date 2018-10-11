@@ -7,11 +7,12 @@ import util from 'contents/js/util';
 class ContentTopContainer extends Component {
   constructor(props) {
     super(props);
+
     const { currentNoteData } = this.props;
 
     this.state = {
       id: currentNoteData.id,
-      isFavorite: false,
+      isFavorite: currentNoteData.isFavorite,
       isActiveInfo: false,
       isActiveFullScreen: false
     };
