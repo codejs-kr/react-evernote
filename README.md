@@ -9,4 +9,4 @@ React로 레이아웃 구조를 Component 단위로 잡았으며,<br>
 * 가볍고 직관적인 UI
 
 ### Live Demo
-[바로가기](http://codejs.co.kr/development/views/react-evernote)
+[바로가기](http://play.codejs.co.kr/react-evernote/)
