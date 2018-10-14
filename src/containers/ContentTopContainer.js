@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ContentTop } from 'components';
-import $ from "jquery";
 import api from 'contents/js/api';
 import util from 'contents/js/util';
 
@@ -16,6 +15,8 @@ class ContentTopContainer extends Component {
       isActiveInfo: false,
       isActiveFullScreen: false
     };
+
+    this.setWindowEvent();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -32,6 +33,23 @@ class ContentTopContainer extends Component {
     return null; // null 을 리턴하면 따로 업데이트 할 것은 없다는 의미
   }
 
+  setWindowEvent = () => {
+    const that = this;
+
+    function hideInfo() {
+      if (that.state.isActiveInfo) {
+        that.setState({
+          isActiveInfo: false
+        });
+      }
+    }
+
+    setTimeout(() => {
+      window.onclick = hideInfo;
+      document.querySelector('iframe').contentWindow.onclick = hideInfo;
+    }, 2000);
+  };
+
   handleFavorite = () => {
     const { currentNoteData } = this.props;
     const { isFavorite } = this.state;
@@ -47,10 +65,12 @@ class ContentTopContainer extends Component {
     });
   };
 
-  handleInfo = () => {
+  handleInfo = (e) => {
     this.setState({
       isActiveInfo: !this.state.isActiveInfo
     });
+
+    e.stopPropagation();
   };
 
   handleDelete = () => {

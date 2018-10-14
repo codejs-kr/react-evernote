@@ -9,8 +9,18 @@ class Tags extends Component {
     super(props);
   }
 
+  setChangeEvent = (id) => {
+    tagit.onChange = () => {
+      api.note.updataTags({
+        id: id,
+        tags: tagit.getData()
+      });
+    };
+  };
+
   componentDidMount() {
     const { id, tags } = this.props;
+    const { setChangeEvent } = this;
     console.log('componentDidMount', id, tags);
 
     tagit.init($('#tags'));
@@ -19,18 +29,12 @@ class Tags extends Component {
       tagit.setData(tags);
     }
 
-    tagit.onChange = () => {
-      console.log('테그 변경');
-
-      api.note.updataTags({
-        id: id,
-        tags: tagit.getData()
-      });
-    };
+    setChangeEvent(id);
   }
 
   componentDidUpdate(prevProps) {
     const { id, tags } = this.props;
+    const { setChangeEvent } = this;
     console.log('componentDidUpdate', id, tags);
 
     // 현재 작성중인 노트일때 업데이트 안함.
@@ -40,6 +44,8 @@ class Tags extends Component {
       if (tags && tags.length) {
         tagit.setData(tags);
       }
+
+      setChangeEvent(id);
     }
   }
 

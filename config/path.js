@@ -10,5 +10,7 @@ function getAbsPath(name) {
 module.exports = {
   rootPath: getAbsPath(),
   srcPath: getAbsPath('src'),
+  publicPath: getAbsPath('public'),
+  distPath: getAbsPath('dist'),
   getAbsPath
 };

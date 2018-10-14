@@ -37,7 +37,6 @@ class ContentArticle extends Component {
   };
 
   componentDidMount() {
-    console.log('노트 componentDidMount');
     const data = this.props.currentNoteData;
 
     this.setEditor();
@@ -46,7 +45,6 @@ class ContentArticle extends Component {
 
   componentDidUpdate() {
     const data = this.props.currentNoteData;
-    console.log('노트 componentDidUpdate', this.noteId, data.id);
 
     if (this.noteId !== data.id) {
       this.updateEditor();

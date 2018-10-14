@@ -3,10 +3,6 @@ import { Tags, ContentInfo } from 'components';
 import './ContentTop.scss';
 
 class ContentTop extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {
       currentNoteData,

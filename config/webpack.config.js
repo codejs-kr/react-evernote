@@ -1,8 +1,16 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { srcPath, publicPath } = require('./path');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { getAbsPath, srcPath, publicPath, distPath } = require('./path');
 
 module.exports = {
+  entry: srcPath,
+
+  output: {
+    filename: 'main.[hash].js'
+  },
+
   // 상대 경로 보완
   resolve: {
     alias: {
@@ -13,6 +21,13 @@ module.exports = {
   },
 
   devtool: 'source-map',
+
+  devServer: {
+    contentBase: [
+      publicPath,
+      srcPath
+    ]
+  },
 
   module: {
     rules: [
@@ -32,26 +47,25 @@ module.exports = {
         ]
       },
       {
-        test: /\.css|.scss$/,
+        test: /\.(scss)$/,
         use: [
-          'style-loader',
           {
             loader: MiniCssExtractPlugin.loader
           },
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
-              root: srcPath, // 루트 지정하여 css 에서 절대 경로로 이미지를 호출하도록 설정.
-              importLoaders: 1
+              sourceMap: true
             }
           },
-          'postcss-loader',
+          {
+            loader: 'postcss-loader'
+          },
           {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              //includePaths: [srcPath + '/contents/scss/modules']  // SCSS 내부에서 import시 사용하는 path설정.
+              // includePaths: [srcPath + '/contents/scss/modules']  // component SCSS 내부에서 import시 사용하는 path설정.
             }
           }
         ]
@@ -60,19 +74,31 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
-            loader: 'file-loader'
+            loader: 'file-loader',
+            options: {
+              // outputPath: 'contents/img/'
+            }
           }
         ]
       }
     ]
   },
   plugins: [
+    new CleanWebpackPlugin([distPath], {
+      root: getAbsPath()
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: srcPath + '/contents/img',
+        to: distPath + '/contents'
+      }
+    ]),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "./index.html"
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
+      filename: "[name].[hash].css",
       chunkFilename: "[id].css"
     })
   ]

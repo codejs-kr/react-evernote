@@ -44,6 +44,7 @@ export default {
 
     $("<span class='tag'><span>" + value + "</span><button type='button'>X</button></span>")
       .insertBefore(that.$input);
+
     that.data.push(value);
 
     // 초기 셋팅시엔 저장 하지 않음.
@@ -51,10 +52,12 @@ export default {
       that.onChange();
     }
   },
-  remove: function() {
-    console.log('remove');
+  remove: function(e) {
+    console.log('remove', e);
+
     const that = this;
-    const $target = $(this).parent();
+    const target = e.target;
+    const $target = $(target).parent();
     const index = $('.tag').index($target);
 
     $target.remove();
