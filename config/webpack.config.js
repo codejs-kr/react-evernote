@@ -91,7 +91,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: srcPath + '/contents/img',
-        to: distPath + '/contents'
+        to: distPath + '/contents/img'
       }
     ]),
     new HtmlWebpackPlugin({
